@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Redirect Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-result {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+        .test-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .test-button:hover {
+            background-color: #0056b3;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login Redirect Implementation Test</h1>
+    
+    <div class="test-result warning">
+        <h3>Test 1: File Structure Verification</h3>
+        <p>Checking if the modified files exist...</p>
+        <div id="test1-result"></div>
+    </div>
+    
+    <div class="test-result warning">
+        <h3>Test 2: Button Modification Check</h3>
+        <p>Verifying that the Google login button has been modified...</p>
+        <div id="test2-result"></div>
+    </div>
+    
+    <div class="test-result warning">
+        <h3>Test 3: JavaScript Function Check</h3>
+        <p>Checking if JavaScript redirect function exists...</p>
+        <div id="test3-result"></div>
+    </div>
+    
+    <div class="test-result warning">
+        <h3>Test 4: CSS Loading Styles Check</h3>
+        <p>Verifying loading CSS styles are present...</p>
+        <div id="test4-result"></div>
+    </div>
+    
+    <h2>Manual Test Instructions</h2>
+    <ol>
+        <li>Open <code>_4/code.html</code> in a web browser</li>
+        <li>Click the "使用 Google 帳戶登入" button</li>
+        <li>Verify that:
+            <ul>
+                <li>The button shows a loading spinner</li>
+                <li>The button text changes to "登入中..."</li>
+                <li>After 800ms, the page redirects to <code>_8/code.html</code></li>
+                <li>The dashboard page loads correctly</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <button class="test-button" onclick="runTests()">Run Automated Tests</button>
+    
+    <div id="test-results"></div>
+    
+    <h2>Implementation Summary</h2>
+    <p>The following changes have been made to <code>_4/code.html</code>:</p>
+    <ul>
+        <li>✅ Added loading state CSS styles (spinner animation)</li>
+        <li>✅ Modified Google login button with <code>id="google-login-btn"</code> and <code>onclick="handleGoogleLogin()"</code></li>
+        <li>✅ Added JavaScript function <code>handleGoogleLogin()</code> that:
+            <ul>
+                <li>Shows loading state with spinner</li>
+                <li>Prevents duplicate clicks</li>
+                <li>Redirects to <code>../_8/code.html</code> after 800ms delay</li>
+            </ul>
+        </li>
+        <li>✅ Created backup file at <code>_4/code.html.backup</code></li>
+    </ul>
+    
+    <script>
+        function runTests() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<h3>Test Results:</h3>';
+            
+            // Test 1: File existence
+            fetch('_4/code.html')
+                .then(response => {
+                    const test1 = document.getElementById('test1-result');
+                    if (response.ok) {
+                        test1.innerHTML = '<p style="color: green;">✅ Login page file exists</p>';
+                        return response.text();
+                    } else {
+                        test1.innerHTML = '<p style="color: red;">❌ Login page file not found</p>';
+                        throw new Error('File not found');
+                    }
+                })
+                .then(html => {
+                    // Test 2: Button modification
+                    const test2 = document.getElementById('test2-result');
+                    if (html.includes('id="google-login-btn"') && html.includes('onclick="handleGoogleLogin()"')) {
+                        test2.innerHTML = '<p style="color: green;">✅ Button has been modified with ID and onclick handler</p>';
+                    } else {
+                        test2.innerHTML = '<p style="color: red;">❌ Button modification not found</p>';
+                    }
+                    
+                    // Test 3: JavaScript function
+                    const test3 = document.getElementById('test3-result');
+                    if (html.includes('function handleGoogleLogin()')) {
+                        test3.innerHTML = '<p style="color: green;">✅ JavaScript function exists</p>';
+                    } else {
+                        test3.innerHTML = '<p style="color: red;">❌ JavaScript function not found</p>';
+                    }
+                    
+                    // Test 4: CSS styles
+                    const test4 = document.getElementById('test4-result');
+                    if (html.includes('.loading-spinner') && html.includes('@keyframes spin')) {
+                        test4.innerHTML = '<p style="color: green;">✅ CSS loading styles exist</p>';
+                    } else {
+                        test4.innerHTML = '<p style="color: red;">❌ CSS loading styles not found</p>';
+                    }
+                    
+                    // Update test result boxes
+                    document.querySelectorAll('.test-result').forEach(box => {
+                        box.classList.remove('warning');
+                        const result = box.querySelector('p[style*="color: green"]') ? 'success' : 'error';
+                        box.classList.add(result);
+                    });
+                    
+                    results.innerHTML += '<div class="test-result success"><p>✅ All automated tests completed. Please perform manual testing as described above.</p></div>';
+                })
+                .catch(error => {
+                    results.innerHTML += '<div class="test-result error"><p>❌ Error running tests: ' + error.message + '</p></div>';
+                });
+        }
+        
+        // Run tests on page load
+        window.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

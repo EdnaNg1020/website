@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tea-green": "#E8F0E8",
+                        "tea-deep": "#5D4037",
+                        "tea-cream": "#FAF7F0",
+                        "primary": "#4CAF50",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "tea": "16px",
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body { font-family: 'Inter', sans-serif; }
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(93, 64, 55, 0.08);
+        }
+        .dashed-border {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%235D40374D' stroke-width='2' stroke-dasharray='8%2c 8' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 16px;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-tea-cream text-tea-deep font-display min-h-screen">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] shadow-2xl">
+<header class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 ios-blur flex items-center gap-4">
+<button class="size-10 rounded-full flex items-center justify-center active:bg-tea-green/50 transition-colors">
+<span class="material-symbols-outlined text-tea-deep">arrow_back_ios_new</span>
+</button>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-tea-deep">批次數據導入</h1>
+<p class="text-[10px] font-semibold text-tea-deep/50 uppercase tracking-widest mt-0.5">Batch Data Import</p>
+</div>
+</header>
+<main class="flex-1 px-5 pb-32 space-y-8 mt-4">
+<section>
+<div class="bg-tea-green/40 p-2 rounded-tea">
+<div class="dashed-border bg-tea-green flex flex-col items-center justify-center py-12 px-6 text-center group cursor-pointer active:scale-[0.99] transition-transform">
+<div class="size-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4">
+<span class="material-symbols-outlined text-tea-deep text-3xl">cloud_upload</span>
+</div>
+<h3 class="font-bold text-tea-deep mb-1">點擊或拖移檔案至此</h3>
+<p class="text-xs text-tea-deep/60">支援 .xlsx, .csv 格式 (最大 50MB)</p>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-3 px-1">
+<span class="material-symbols-outlined text-tea-deep/40 text-sm">info</span>
+<p class="text-[11px] text-tea-deep/50 leading-relaxed">請確保 Excel 欄位包含「會員編號」與「消費日期」，以獲得最準確的流失預測結果。</p>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-tea-deep/80 text-sm">最近上傳紀錄</h3>
+<span class="text-[10px] font-bold text-tea-deep/40 uppercase tracking-wider">Recent Activities</span>
+</div>
+<div class="space-y-3">
+<div class="bg-white p-4 rounded-tea border border-tea-green card-shadow">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-xl bg-tea-green flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tea-deep">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-tea-deep truncate">2024_Q2_Member_Sales.xlsx</h4>
+<span class="text-[10px] font-bold text-primary">85%</span>
+</div>
+<p class="text-[10px] text-tea-deep/40 mt-0.5">2024-05-24 14:20 · 4.2 MB</p>
+<div class="mt-3 h-1.5 w-full bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+</div>
+<p class="text-[10px] font-bold text-tea-deep/60 mt-2 flex items-center gap-1">
+<span class="size-1 bg-tea-deep/20 rounded-full animate-pulse"></span>
+                                    系統正在解析數據中...
+                                </p>
+</div>
+</div>
+</div>
+<div class="bg-white/60 p-4 rounded-tea border border-tea-green/30 opacity-80">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-xl bg-tea-green/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tea-deep/50">task</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-medium text-tea-deep truncate">May_Loyalty_Adjustment.csv</h4>
+<span class="text-[10px] font-bold text-tea-deep/40">已完成</span>
+</div>
+<p class="text-[10px] text-tea-deep/40 mt-0.5">2024-05-22 09:15 · 1.8 MB</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<div class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 ios-blur border-t border-tea-green px-5 pt-4 pb-10 z-[60]">
+<button class="w-full bg-tea-deep/20 text-white font-bold py-4 rounded-tea flex items-center justify-center gap-2 cursor-not-allowed transition-all" disabled="">
+<span>確認並執行分析</span>
+<span class="material-symbols-outlined text-sm">analytics</span>
+</button>
+<p class="text-center text-[10px] text-tea-deep/40 mt-3">請先上傳檔案以開始分析程序</p>
+</div>
+<nav class="invisible pointer-events-none">
+<div class="h-24"></div>
+</nav>
+</div>
+
+</body></html>

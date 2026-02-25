@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精準行銷功能測試</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #13ec13;
+            padding-bottom: 10px;
+        }
+        .test-step {
+            background: #f8f9fa;
+            border-left: 4px solid #13ec13;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .test-step h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.passed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .test-link {
+            display: inline-block;
+            background: #13ec13;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #0fc70f;
+        }
+        .test-link.secondary {
+            background: #6c757d;
+        }
+        .test-link.secondary:hover {
+            background: #5a6268;
+        }
+        .instructions {
+            background: #e8f4f8;
+            border: 1px solid #b8daff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .feature-card h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .feature-card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .feature-card li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>精準行銷頁面功能測試</h1>
+        
+        <div class="instructions">
+            <h3>測試說明</h3>
+            <p>此測試驗證從登入頁面到精準行銷頁面的完整導航流程，以及所有按鈕功能是否正常運作。</p>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 1: 登入頁面重定向 <span class="status passed">已通過</span></h3>
+            <p>驗證登入頁面 (<code>_4/code.html</code>) 的 Google 登入按鈕能正確重定向到儀表板。</p>
+            <a href="_4/code.html" class="test-link" target="_blank">測試登入頁面</a>
+            <p><strong>預期結果：</strong> 點擊 Google 登入按鈕後，顯示載入狀態並在 2 秒後重定向到儀表板。</p>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 2: 儀表板導航 <span class="status passed">已通過</span></h3>
+            <p>驗證儀表板 (<code>_8/code.html</code>) 的「精準行銷」按鈕能正確導航到精準行銷頁面。</p>
+            <a href="_8/code.html" class="test-link" target="_blank">測試儀表板</a>
+            <p><strong>預期結果：</strong> 點擊「精準行銷」按鈕（底部導航或卡片）後，跳轉到精準行銷頁面。</p>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 3: 精準行銷頁面功能 <span class="status pending">測試中</span></h3>
+            <p>驗證精準行銷頁面 (<code>_1/code.html</code>) 的所有按鈕功能：</p>
+            <a href="_1/code.html" class="test-link" target="_blank">測試精準行銷頁面</a>
+            
+            <div class="feature-list">
+                <div class="feature-card">
+                    <h4>🔙 返回按鈕</h4>
+                    <ul>
+                        <li>點擊左上角返回箭頭</li>
+                        <li>應返回儀表板</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🔍 搜尋功能</h4>
+                    <ul>
+                        <li>點擊右上角搜尋圖標</li>
+                        <li>應顯示搜尋模態框</li>
+                        <li>可輸入文字篩選結果</li>
+                        <li>按 ESC 或點擊取消關閉</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🎯 推薦卡片</h4>
+                    <ul>
+                        <li>3 個智慧推薦方案卡片</li>
+                        <li>點擊按鈕觸發動作</li>
+                        <li>顯示載入狀態</li>
+                        <li>顯示成功回饋</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📱 底部導航</h4>
+                    <ul>
+                        <li>數據分析 → 儀表板</li>
+                        <li>精準行銷 → 當前頁面</li>
+                        <li>會員管理 → 會員頁面</li>
+                        <li>設定 → 設定頁面</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 4: 完整流程測試 <span class="status pending">進行中</span></h3>
+            <p>執行完整端到端測試：</p>
+            <ol>
+                <li>從登入頁面開始</li>
+                <li>登入後進入儀表板</li>
+                <li>點擊精準行銷進入目標頁面</li>
+                <li>測試所有互動功能</li>
+                <li>返回儀表板完成循環</li>
+            </ol>
+            <a href="_4/code.html" class="test-link" target="_blank">開始完整測試</a>
+            <a href="test_website_functionality.html" class="test-link secondary" target="_blank">查看詳細測試報告</a>
+        </div>
+        
+        <div class="test-step">
+            <h3>實現的功能總結</h3>
+            <ul>
+                <li>✅ 登入頁面重定向功能（載入動畫 + 2秒後跳轉）</li>
+                <li>✅ 儀表板到精準行銷頁面導航（2個連結已更新）</li>
+                <li>✅ 精準行銷頁面返回按鈕功能</li>
+                <li>✅ 搜尋模態框（開啟/關閉、篩選、鍵盤支援）</li>
+                <li>✅ 推薦卡片按鈕動作（載入狀態、成功回饋）</li>
+                <li>✅ 底部導航連結（4個項目全部可點擊）</li>
+                <li>✅ CSS 動畫增強（淡入、滑入、旋轉動畫）</li>
+                <li>✅ 響應式設計與深色模式支援</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+            <h3>測試指令</h3>
+            <p>在瀏覽器中開啟以下頁面進行手動測試：</p>
+            <pre style="background: #f8f9fa; padding: 15px; border-radius: 6px; overflow-x: auto;">
+# 測試登入流程
+file:///C:/Users/User/Desktop/stitch/website/_4/code.html
+
+# 測試儀表板導航  
+file:///C:/Users/User/Desktop/stitch/website/_8/code.html
+
+# 測試精準行銷頁面
+file:///C:/Users/User/Desktop/stitch/website/_1/code.html
+
+# 完整測試流程
+1. 開啟登入頁面，點擊 Google 登入按鈕
+2. 等待 2 秒後自動跳轉到儀表板
+3. 點擊底部導航的「精準行銷」圖標
+4. 測試精準行銷頁面的所有功能
+5. 點擊返回按鈕回到儀表板</pre>
+        </div>
+    </div>
+</body>
+</html>

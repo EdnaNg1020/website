@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "cream": "#FAF7F0",
+                        "tea-green": "#E8F0E8",
+                        "deep-brown": "#5D4037",
+                        "vibrant-green": "#4CAF50",
+                        "soft-shadow": "rgba(93, 64, 55, 0.08)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "card": "16px",
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            background-color: #FAF7F0;
+            color: #5D4037;
+            font-family: 'Inter', sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px var(--soft-shadow);
+        }
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            background: #5D4037;
+            border: 3px solid #E8F0E8;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tooltip-container:hover .tooltip-box {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .gauge-transition {
+            transition: stroke-dasharray 0.8s ease-out;
+        }
+        .bar-transition {
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+<title>忠茶·會員價值分析儀</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-[480px] mx-auto bg-cream shadow-2xl">
+<div class="flex items-center bg-cream/90 backdrop-blur-md p-4 pb-2 justify-between sticky top-0 z-20 border-b border-deep-brown/5">
+<div class="text-deep-brown flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined cursor-pointer">chevron_left</span>
+</div>
+<h2 class="text-deep-brown text-lg font-bold leading-tight tracking-tight flex-1 text-center">忠茶·會員價值分析儀</h2>
+<div class="flex w-12 items-center justify-end">
+<div class="relative">
+<button class="flex size-10 items-center justify-center rounded-full bg-tea-green text-deep-brown">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<span class="absolute top-0 right-0 size-2.5 bg-vibrant-green rounded-full ring-2 ring-cream"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-32">
+<div class="p-5 space-y-5">
+<div class="bg-white p-5 rounded-card card-shadow border border-tea-green">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-deep-brown text-base font-bold flex items-center gap-2">
+                            會員屬性輸入
+                        </h3>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-tea-green/50">
+<span class="size-1.5 rounded-full bg-vibrant-green"></span>
+<span class="text-[11px] text-deep-brown font-semibold">即時更新</span>
+</div>
+</div>
+<div class="mb-8">
+<div class="flex w-full items-center justify-between mb-3">
+<p class="text-deep-brown/80 text-sm font-semibold">入會時長 (月份)</p>
+<p class="text-deep-brown text-sm font-bold bg-tea-green px-3 py-1 rounded-lg">30</p>
+</div>
+<div class="relative flex h-6 w-full items-center">
+<input class="w-full h-2 bg-tea-green rounded-full appearance-none cursor-pointer" max="60" min="0" type="range" value="30"/>
+</div>
+<div class="flex justify-between mt-2 px-1">
+<span class="text-[10px] text-deep-brown/40 font-bold">0月</span>
+<span class="text-[10px] text-deep-brown/40 font-bold">60月</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-deep-brown/80 text-sm font-semibold">滿意度評分</p>
+<div class="flex flex-col items-end">
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-vibrant-green" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined text-vibrant-green" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined text-vibrant-green" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined text-vibrant-green" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined text-tea-green">star</span>
+</div>
+<span class="text-[10px] text-deep-brown/50 mt-1 font-bold">4.0 / 5.0</span>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-card card-shadow border border-tea-green flex flex-col items-center text-center">
+<div class="tooltip-container relative w-full mb-4">
+<div class="flex items-center justify-center gap-1">
+<p class="text-deep-brown/60 text-xs font-bold uppercase tracking-widest">忠誠度指數</p>
+<span class="material-symbols-outlined text-[16px] text-deep-brown/40 cursor-help">info</span>
+</div>
+<div class="tooltip-box absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-56 p-3 bg-deep-brown text-cream text-[11px] leading-relaxed rounded-xl shadow-xl opacity-0 invisible transition-all duration-200 z-30 pointer-events-none transform translate-y-1">
+                            綜合會員月數、滿意度、最近到店間隔計算，權重來自決策樹模型
+                            <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-deep-brown"></div>
+</div>
+</div>
+<div class="relative size-32 flex items-center justify-center">
+<svg class="size-full -rotate-90" viewBox="0 0 36 36">
+<path class="text-tea-green" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="3"></path>
+<path class="gauge-transition" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#4CAF50" stroke-dasharray="72, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-black text-deep-brown tabular-nums">72</span>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-card card-shadow border border-tea-green">
+<div class="tooltip-container relative">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-1">
+<p class="text-deep-brown/60 text-xs font-bold uppercase tracking-widest">流失風險評估</p>
+<span class="material-symbols-outlined text-[16px] text-deep-brown/40 cursor-help">info</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-vibrant-green/10 rounded-full">
+<div class="size-2 rounded-full bg-vibrant-green"></div>
+<span class="text-vibrant-green font-bold text-[10px] uppercase">低風險</span>
+</div>
+</div>
+<div class="tooltip-box absolute bottom-full left-0 mb-3 w-48 p-3 bg-deep-brown text-cream text-[11px] leading-relaxed rounded-xl shadow-xl opacity-0 invisible transition-all duration-200 z-30 pointer-events-none transform translate-y-1">
+                            基於決策樹預測，模型準確率 78.2%
+                            <div class="absolute top-full left-6 border-8 border-transparent border-t-deep-brown"></div>
+</div>
+</div>
+<div class="flex items-end justify-between">
+<div>
+<p class="text-4xl font-black text-deep-brown tabular-nums">28%</p>
+<p class="text-[11px] text-vibrant-green font-medium flex items-center gap-0.5 mt-1">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+                                較上月下降 4.2%
+                            </p>
+</div>
+<div class="h-12 w-24 bg-tea-green/30 rounded-lg flex items-center justify-center overflow-hidden">
+<div class="flex gap-1 items-end h-6">
+<div class="w-1.5 h-3 bg-tea-green rounded-full"></div>
+<div class="w-1.5 h-4 bg-tea-green rounded-full"></div>
+<div class="w-1.5 h-5 bg-tea-green rounded-full"></div>
+<div class="w-1.5 h-3 bg-vibrant-green rounded-full"></div>
+<div class="w-1.5 h-2 bg-vibrant-green rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-card card-shadow border border-tea-green">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-deep-brown text-sm font-bold">關鍵影響因素權重</h3>
+<span class="text-[10px] text-deep-brown/60 bg-tea-green px-2 py-0.5 rounded-full font-bold">權重佔比</span>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-deep-brown text-xs font-semibold">距離上次消費天數</span>
+<div class="tooltip-container relative flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-deep-brown/30 cursor-help">info</span>
+<span class="text-deep-brown font-bold text-xs tabular-nums">42.7%</span>
+<div class="tooltip-box absolute bottom-full right-0 mb-3 w-32 p-2 bg-deep-brown text-cream text-[10px] rounded-xl shadow-xl opacity-0 invisible transition-all duration-200 z-30 pointer-events-none transform translate-y-1 text-center">
+                                        最近到店間隔
+                                        <div class="absolute top-full right-3 border-8 border-transparent border-t-deep-brown"></div>
+</div>
+</div>
+</div>
+<div class="h-2.5 w-full bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-vibrant-green rounded-full bar-transition shadow-[0_0_8px_rgba(76,175,80,0.3)]" style="width: 42.7%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-deep-brown text-xs font-semibold">滿意度評分</span>
+<div class="tooltip-container relative flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-deep-brown/30 cursor-help">info</span>
+<span class="text-deep-brown font-bold text-xs tabular-nums">28.3%</span>
+<div class="tooltip-box absolute bottom-full right-0 mb-3 w-32 p-2 bg-deep-brown text-cream text-[10px] rounded-xl shadow-xl opacity-0 invisible transition-all duration-200 z-30 pointer-events-none transform translate-y-1 text-center">
+                                        平均滿意度
+                                        <div class="absolute top-full right-3 border-8 border-transparent border-t-deep-brown"></div>
+</div>
+</div>
+</div>
+<div class="h-2.5 w-full bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-vibrant-green/80 rounded-full bar-transition" style="width: 28.3%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-deep-brown text-xs font-semibold">入會總時長</span>
+<div class="tooltip-container relative flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-deep-brown/30 cursor-help">info</span>
+<span class="text-deep-brown font-bold text-xs tabular-nums">15.1%</span>
+<div class="tooltip-box absolute bottom-full right-0 mb-3 w-32 p-2 bg-deep-brown text-cream text-[10px] rounded-xl shadow-xl opacity-0 invisible transition-all duration-200 z-30 pointer-events-none transform translate-y-1 text-center">
+                                        累計會員月數
+                                        <div class="absolute top-full right-3 border-8 border-transparent border-t-deep-brown"></div>
+</div>
+</div>
+</div>
+<div class="h-2.5 w-full bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-vibrant-green/60 rounded-full bar-transition" style="width: 15.1%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 pt-4 text-center">
+<p class="text-[10px] text-deep-brown/50 leading-relaxed font-medium">
+                        數據來源：忠茶 CRM 數據中心 (最後更新: 2023-10-24 09:12)<br/>
+                        系統已啟用實時數據綁定，任何輸入更改將立即重新計算分析結果。
+                    </p>
+</div>
+</div>
+</div>
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] flex gap-2 border-t border-deep-brown/5 bg-cream/95 backdrop-blur-lg px-6 pb-8 pt-3 z-20">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-deep-brown" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1">analytics</span>
+</div>
+<p class="text-[10px] font-bold leading-normal">分析</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-deep-brown/40" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">group</span>
+</div>
+<p class="text-[10px] font-bold leading-normal">會員</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-deep-brown/40" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+</div>
+<p class="text-[10px] font-bold leading-normal">設定</p>
+</a>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-TW"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "cream": "#FAF7F0",
+                        "tea-green": "#E8F0E8",
+                        "deep-brown": "#5D4037",
+                        "soft-tea": "#C8D9C8",
+                        "dark-accent": "#422E28",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "2xl": "16px",
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body { font-family: 'Inter', sans-serif; }
+        }
+        .fade-transition {
+            transition: opacity 0.2s ease-in-out;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        .fade-in {
+            opacity: 1;
+        }::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-cream font-display text-deep-brown min-h-screen">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-cream shadow-2xl">
+<div class="flex items-center px-4 pb-3 pt-6 justify-between sticky top-0 bg-cream/95 backdrop-blur-md z-30 border-b border-deep-brown/10">
+<div class="text-deep-brown flex size-10 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</div>
+<h2 class="text-deep-brown text-lg font-bold leading-tight tracking-tight flex-1 text-center">忠茶·會員價值分析儀</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center text-deep-brown" onclick="resetAnalysis()">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+<div class="px-4 py-6">
+<div class="bg-white rounded-2xl p-5 shadow-sm border border-deep-brown/5">
+<div class="flex items-center justify-between mb-5">
+<span class="text-xs font-bold text-deep-brown/60 uppercase tracking-widest">參數即時調整</span>
+<span class="text-[10px] bg-tea-green text-deep-brown px-2 py-0.5 rounded-full font-bold">動態模擬中</span>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex-1">
+<div class="flex justify-between mb-2">
+<span class="text-xs text-deep-brown/70 font-semibold uppercase">入會時長 (月)</span>
+<span class="text-xs font-bold text-deep-brown" id="member-months-val">12</span>
+</div>
+<input class="w-full h-1.5 bg-tea-green rounded-full appearance-none accent-deep-brown cursor-pointer" id="member-months-input" max="60" min="1" type="range" value="12"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between mb-2">
+<span class="text-xs text-deep-brown/70 font-semibold uppercase">滿意度設定</span>
+<span class="text-xs font-bold text-deep-brown" id="satisfaction-val">4.0</span>
+</div>
+<input class="w-full h-1.5 bg-tea-green rounded-full appearance-none accent-deep-brown cursor-pointer" id="satisfaction-input" max="5" min="1" step="0.1" type="range" value="4.0"/>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-tea-green hover:bg-soft-tea rounded-2xl text-deep-brown font-bold text-sm shadow-sm transition-all active:scale-95" onclick="resetAnalysis()">
+<span class="material-symbols-outlined text-sm">restart_alt</span>
+                        重新評估 (Reset)
+                    </button>
+</div>
+</div>
+</div>
+<div class="fade-transition space-y-4" id="results-container">
+<div class="px-4 grid grid-cols-2 gap-3">
+<div class="bg-white p-4 rounded-2xl shadow-sm border border-deep-brown/5">
+<div class="flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-deep-brown/40 text-sm">verified</span>
+<p class="text-[10px] text-deep-brown/50 font-bold uppercase">忠誠度指數</p>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-black text-deep-brown" id="loyalty-index">84.2</span>
+<span class="text-[10px] font-bold text-deep-brown/60">%</span>
+</div>
+</div>
+<div class="bg-white p-4 rounded-2xl shadow-sm border border-deep-brown/5">
+<div class="flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-red-700/60 text-sm">warning</span>
+<p class="text-[10px] text-deep-brown/50 font-bold uppercase">流失風險</p>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-black text-red-800/80" id="churn-risk">12.5</span>
+<span class="text-[10px] font-bold text-red-800/80">%</span>
+</div>
+</div>
+</div>
+<div class="px-4">
+<div class="bg-white rounded-2xl p-5 shadow-sm border border-deep-brown/5">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-deep-brown text-base font-bold">會員價值維度對比</h3>
+<p class="text-[10px] text-deep-brown/50 mt-0.5">多維度核心指標分佈比對</p>
+</div>
+<span class="material-symbols-outlined text-deep-brown/30">equalizer</span>
+</div>
+<div class="flex gap-4 justify-start mb-8 overflow-x-auto pb-2">
+<div class="flex items-center gap-1.5 whitespace-nowrap">
+<div class="size-2.5 rounded-full bg-deep-brown"></div>
+<span class="text-[9px] font-bold text-deep-brown/70">當前數值</span>
+</div>
+<div class="flex items-center gap-1.5 whitespace-nowrap">
+<div class="size-2.5 rounded-full bg-soft-tea"></div>
+<span class="text-[9px] font-bold text-deep-brown/70">長期均值</span>
+</div>
+<div class="flex items-center gap-1.5 whitespace-nowrap">
+<div class="size-2.5 rounded-full bg-tea-green border border-deep-brown/10"></div>
+<span class="text-[9px] font-bold text-deep-brown/70">新進參考</span>
+</div>
+</div>
+<div class="relative h-44 flex items-end justify-between px-1 border-b border-deep-brown/10 pb-2 gap-2">
+<div class="flex flex-col items-center flex-1">
+<div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+<div class="w-2.5 bg-deep-brown rounded-t-sm h-[80%]"></div>
+<div class="w-2.5 bg-soft-tea rounded-t-sm h-[76%]"></div>
+<div class="w-2.5 bg-tea-green border-x border-t border-deep-brown/10 rounded-t-sm h-[68%]"></div>
+</div>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+<div class="w-2.5 bg-deep-brown rounded-t-sm h-[60%]"></div>
+<div class="w-2.5 bg-soft-tea rounded-t-sm h-[85%]"></div>
+<div class="w-2.5 bg-tea-green border-x border-t border-deep-brown/10 rounded-t-sm h-[30%]"></div>
+</div>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+<div class="w-2.5 bg-deep-brown rounded-t-sm h-[70%]"></div>
+<div class="w-2.5 bg-soft-tea rounded-t-sm h-[82%]"></div>
+<div class="w-2.5 bg-tea-green border-x border-t border-deep-brown/10 rounded-t-sm h-[40%]"></div>
+</div>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+<div class="w-2.5 bg-deep-brown rounded-t-sm h-[45%]"></div>
+<div class="w-2.5 bg-soft-tea rounded-t-sm h-[35%]"></div>
+<div class="w-2.5 bg-tea-green border-x border-t border-deep-brown/10 rounded-t-sm h-[60%]"></div>
+</div>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+<div class="w-2.5 bg-deep-brown rounded-t-sm h-[75%]"></div>
+<div class="w-2.5 bg-soft-tea rounded-t-sm h-[90%]"></div>
+<div class="w-2.5 bg-tea-green border-x border-t border-deep-brown/10 rounded-t-sm h-[50%]"></div>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 px-0 gap-1">
+<span class="text-[8px] font-bold text-deep-brown/40 text-center flex-1 leading-tight">滿意度</span>
+<span class="text-[8px] font-bold text-deep-brown/40 text-center flex-1 leading-tight">到店頻次</span>
+<span class="text-[8px] font-bold text-deep-brown/40 text-center flex-1 leading-tight">重複購買</span>
+<span class="text-[8px] font-bold text-deep-brown/40 text-center flex-1 leading-tight">活動參與</span>
+<span class="text-[8px] font-bold text-deep-brown/40 text-center flex-1 leading-tight">忠誠指數</span>
+</div>
+</div>
+</div>
+<div class="px-4 pb-28">
+<div class="bg-deep-brown rounded-2xl p-6 shadow-xl relative overflow-hidden">
+<div class="absolute -top-10 -right-10 size-40 bg-tea-green/10 blur-3xl rounded-full"></div>
+<div class="flex items-center gap-4 mb-6 relative z-10">
+<div class="bg-tea-green size-10 rounded-xl flex items-center justify-center text-deep-brown">
+<span class="material-symbols-outlined text-2xl font-bold">bolt</span>
+</div>
+<div>
+<h4 class="font-bold text-tea-green text-base">動態洞察與模型建議</h4>
+<p class="text-[10px] text-tea-green/50">基於 2024 Q2 會員大數據分析</p>
+</div>
+</div>
+<div class="space-y-4 relative z-10">
+<div class="p-4 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-tea-green text-lg">psychology</span>
+<div class="flex-1">
+<p class="text-xs text-tea-green/90 leading-relaxed font-medium">
+                                        當前預測偏差值為 <span class="text-tea-green font-bold text-base inline-block px-1" id="insight-diff">0.19</span> 分。
+                                    </p>
+</div>
+</div>
+<div class="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
+<span class="text-[9px] text-tea-green/40 font-medium">📊 數據源：2024 Q2</span>
+<span class="text-[9px] bg-tea-green/20 text-tea-green px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Positive</span>
+</div>
+</div>
+</div>
+<details class="group mt-6 relative z-10">
+<summary class="flex items-center justify-center gap-2 cursor-pointer py-1 text-tea-green/50 hover:text-tea-green transition-colors">
+<span class="text-[10px] font-bold tracking-wide">查看分析模型細節</span>
+<span class="material-symbols-outlined text-sm transition-transform duration-200 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl space-y-4">
+<div>
+<p class="text-[9px] text-tea-green/40 font-bold uppercase mb-2 tracking-widest">分析特徵 (Features)</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="text-[9px] px-2 py-1 bg-white/5 text-tea-green/70 rounded border border-white/10">Member Months</span>
+<span class="text-[9px] px-2 py-1 bg-white/5 text-tea-green/70 rounded border border-white/10">Satisfaction</span>
+<span class="text-[9px] px-2 py-1 bg-white/5 text-tea-green/70 rounded border border-white/10">Frequency</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] text-tea-green/40 font-bold uppercase mb-2 tracking-widest">權重分佈 (Importance)</p>
+<div class="space-y-2">
+<div class="space-y-1">
+<div class="flex justify-between text-[9px] text-tea-green/70">
+<span>上次到店間隔</span>
+<span class="font-bold">42.7%</span>
+</div>
+<div class="h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-tea-green w-[42.7%]"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[9px] text-tea-green/70">
+<span>滿意度評分</span>
+<span class="font-bold">28.3%</span>
+</div>
+<div class="h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-tea-green w-[28.3%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<div class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-xl border-t border-deep-brown/10 px-6 pb-8 pt-3 z-40">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-deep-brown/40" href="#">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+<p class="text-[9px] font-bold">總覽</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-deep-brown" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">analytics</span>
+<p class="text-[9px] font-bold">價值分析</p>
+</a>
+<div class="relative -top-6">
+<button class="size-14 bg-deep-brown rounded-2xl shadow-lg shadow-deep-brown/20 flex items-center justify-center text-tea-green">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-deep-brown/40" href="#">
+<span class="material-symbols-outlined text-2xl">target</span>
+<p class="text-[9px] font-bold">精準行銷</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-deep-brown/40" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<p class="text-[9px] font-bold">個人中心</p>
+</a>
+</div>
+</div>
+</div>
+<script>
+        function animateValue(obj, start, end, duration, decimals = 1) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = (progress * (end - start) + start).toFixed(decimals);
+                obj.innerHTML = value;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        function resetAnalysis() {
+            // Reset UI Values
+            document.getElementById('member-months-input').value = 12;
+            document.getElementById('satisfaction-input').value = 4.0;
+            document.getElementById('member-months-val').innerText = '12';
+            document.getElementById('satisfaction-val').innerText = '4.0';
+            const container = document.getElementById('results-container');
+            // Fade out
+            container.classList.add('fade-out');
+            setTimeout(() => {
+                // Initial values for animation
+                document.getElementById('loyalty-index').innerText = "0";
+                document.getElementById('churn-risk').innerText = "0";
+                document.getElementById('insight-diff').innerText = "0";
+                // Fade in
+                container.classList.remove('fade-out');
+                container.classList.add('fade-in');
+                // Animate counts
+                animateValue(document.getElementById('loyalty-index'), 0, 84.2, 600, 1);
+                animateValue(document.getElementById('churn-risk'), 0, 12.5, 600, 1);
+                animateValue(document.getElementById('insight-diff'), 0, 0.19, 600, 2);
+                setTimeout(() => {
+                    container.classList.remove('fade-in');
+                }, 200);
+            }, 200);
+        }
+        document.getElementById('member-months-input').addEventListener('input', (e) => {
+            document.getElementById('member-months-val').innerText = e.target.value;
+        });
+        document.getElementById('satisfaction-input').addEventListener('input', (e) => {
+            document.getElementById('satisfaction-val').innerText = parseFloat(e.target.value).toFixed(1);
+        });
+    </script>
+
+</body></html>
