@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Redirect Test</title>
+    <title>Login Redirect Test - Updated Flow</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
@@ -52,32 +52,70 @@
             border-radius: 3px;
             font-family: monospace;
         }
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+        }
+        .flow-arrow {
+            font-size: 24px;
+            color: #6c757d;
+        }
     </style>
 </head>
 <body>
-    <h1>Login Redirect Implementation Test</h1>
+    <h1>Login Redirect Implementation Test - Updated Flow</h1>
+    
+    <div class="flow-diagram">
+        <div class="flow-step">
+            <h3>Step 1</h3>
+            <p><code>_4/code.html</code></p>
+            <p>Google Login Page</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+            <h3>Step 2</h3>
+            <p><code>_15/code.html</code></p>
+            <p>Gmail/Password Login</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+            <h3>Step 3</h3>
+            <p><code>_8/code.html</code></p>
+            <p>Dashboard</p>
+        </div>
+    </div>
     
     <div class="test-result warning">
         <h3>Test 1: File Structure Verification</h3>
-        <p>Checking if the modified files exist...</p>
+        <p>Checking if all required files exist...</p>
         <div id="test1-result"></div>
     </div>
     
     <div class="test-result warning">
-        <h3>Test 2: Button Modification Check</h3>
-        <p>Verifying that the Google login button has been modified...</p>
+        <h3>Test 2: _4/code.html Redirect Check</h3>
+        <p>Verifying that Google login redirects to _15/code.html...</p>
         <div id="test2-result"></div>
     </div>
     
     <div class="test-result warning">
-        <h3>Test 3: JavaScript Function Check</h3>
-        <p>Checking if JavaScript redirect function exists...</p>
+        <h3>Test 3: _15/code.html Login Function Check</h3>
+        <p>Checking if Gmail/password login function exists...</p>
         <div id="test3-result"></div>
     </div>
     
     <div class="test-result warning">
-        <h3>Test 4: CSS Loading Styles Check</h3>
-        <p>Verifying loading CSS styles are present...</p>
+        <h3>Test 4: _15/code.html Form Validation</h3>
+        <p>Verifying form validation and password toggle...</p>
         <div id="test4-result"></div>
     </div>
     
@@ -89,8 +127,16 @@
             <ul>
                 <li>The button shows a loading spinner</li>
                 <li>The button text changes to "登入中..."</li>
-                <li>After 800ms, the page redirects to <code>_8/code.html</code></li>
-                <li>The dashboard page loads correctly</li>
+                <li>After 800ms, the page redirects to <code>_15/code.html</code> (Gmail/Password login)</li>
+            </ul>
+        </li>
+        <li>On <code>_15/code.html</code>:
+            <ul>
+                <li>Enter a Gmail address (must contain @gmail.com)</li>
+                <li>Enter a password</li>
+                <li>Click the "登入" button</li>
+                <li>Verify that the button shows loading state</li>
+                <li>After 800ms, the page redirects to <code>_8/code.html</code> (Dashboard)</li>
             </ul>
         </li>
     </ol>
@@ -100,19 +146,31 @@
     <div id="test-results"></div>
     
     <h2>Implementation Summary</h2>
-    <p>The following changes have been made to <code>_4/code.html</code>:</p>
+    <p>The following changes have been made:</p>
+    
+    <h3>1. <code>_4/code.html</code> (Google Login Page)</h3>
     <ul>
-        <li>✅ Added loading state CSS styles (spinner animation)</li>
-        <li>✅ Modified Google login button with <code>id="google-login-btn"</code> and <code>onclick="handleGoogleLogin()"</code></li>
-        <li>✅ Added JavaScript function <code>handleGoogleLogin()</code> that:
+        <li>✅ Modified <code>handleGoogleLogin()</code> function to redirect to <code>../_15/code.html</code> instead of <code>../_8/code.html</code></li>
+        <li>✅ Updated comment to reflect new redirect target</li>
+    </ul>
+    
+    <h3>2. <code>_15/code.html</code> (Gmail/Password Login Page)</h3>
+    <ul>
+        <li>✅ Added <code>onclick="handleLogin()"</code> to the login button</li>
+        <li>✅ Added JavaScript function <code>handleLogin()</code> that:
             <ul>
+                <li>Validates email format (must contain @gmail.com)</li>
                 <li>Shows loading state with spinner</li>
-                <li>Prevents duplicate clicks</li>
                 <li>Redirects to <code>../_8/code.html</code> after 800ms delay</li>
             </ul>
         </li>
-        <li>✅ Created backup file at <code>_4/code.html.backup</code></li>
+        <li>✅ Added password visibility toggle functionality</li>
+        <li>✅ Added Enter key support for login</li>
     </ul>
+    
+    <h3>3. Complete Login Flow</h3>
+    <p>The new login flow is now:</p>
+    <p><code>Google Login (_4) → Gmail/Password Login (_15) → Dashboard (_8)</code></p>
     
     <script>
         function runTests() {
@@ -120,54 +178,61 @@
             results.innerHTML = '<h3>Test Results:</h3>';
             
             // Test 1: File existence
-            fetch('_4/code.html')
-                .then(response => {
-                    const test1 = document.getElementById('test1-result');
-                    if (response.ok) {
-                        test1.innerHTML = '<p style="color: green;">✅ Login page file exists</p>';
-                        return response.text();
-                    } else {
-                        test1.innerHTML = '<p style="color: red;">❌ Login page file not found</p>';
-                        throw new Error('File not found');
-                    }
-                })
-                .then(html => {
-                    // Test 2: Button modification
-                    const test2 = document.getElementById('test2-result');
-                    if (html.includes('id="google-login-btn"') && html.includes('onclick="handleGoogleLogin()"')) {
-                        test2.innerHTML = '<p style="color: green;">✅ Button has been modified with ID and onclick handler</p>';
-                    } else {
-                        test2.innerHTML = '<p style="color: red;">❌ Button modification not found</p>';
-                    }
-                    
-                    // Test 3: JavaScript function
-                    const test3 = document.getElementById('test3-result');
-                    if (html.includes('function handleGoogleLogin()')) {
-                        test3.innerHTML = '<p style="color: green;">✅ JavaScript function exists</p>';
-                    } else {
-                        test3.innerHTML = '<p style="color: red;">❌ JavaScript function not found</p>';
-                    }
-                    
-                    // Test 4: CSS styles
-                    const test4 = document.getElementById('test4-result');
-                    if (html.includes('.loading-spinner') && html.includes('@keyframes spin')) {
-                        test4.innerHTML = '<p style="color: green;">✅ CSS loading styles exist</p>';
-                    } else {
-                        test4.innerHTML = '<p style="color: red;">❌ CSS loading styles not found</p>';
-                    }
-                    
-                    // Update test result boxes
-                    document.querySelectorAll('.test-result').forEach(box => {
-                        box.classList.remove('warning');
-                        const result = box.querySelector('p[style*="color: green"]') ? 'success' : 'error';
-                        box.classList.add(result);
-                    });
-                    
-                    results.innerHTML += '<div class="test-result success"><p>✅ All automated tests completed. Please perform manual testing as described above.</p></div>';
-                })
-                .catch(error => {
-                    results.innerHTML += '<div class="test-result error"><p>❌ Error running tests: ' + error.message + '</p></div>';
+            Promise.all([
+                fetch('_4/code.html').then(r => r.ok ? r.text() : Promise.reject('_4/code.html not found')),
+                fetch('_15/code.html').then(r => r.ok ? r.text() : Promise.reject('_15/code.html not found')),
+                fetch('_8/code.html').then(r => r.ok ? r.text() : Promise.reject('_8/code.html not found'))
+            ])
+            .then(([html4, html15, html8]) => {
+                const test1 = document.getElementById('test1-result');
+                test1.innerHTML = '<p style="color: green;">✅ All required files exist</p>';
+                
+                // Test 2: _4 redirect check
+                const test2 = document.getElementById('test2-result');
+                if (html4.includes('window.location.href = \'../_15/code.html\'')) {
+                    test2.innerHTML = '<p style="color: green;">✅ _4/code.html redirects to _15/code.html</p>';
+                } else if (html4.includes('window.location.href = \'../_8/code.html\'')) {
+                    test2.innerHTML = '<p style="color: red;">❌ _4/code.html still redirects to _8/code.html (old flow)</p>';
+                } else {
+                    test2.innerHTML = '<p style="color: red;">❌ No redirect found in _4/code.html</p>';
+                }
+                
+                // Test 3: _15 login function check
+                const test3 = document.getElementById('test3-result');
+                if (html15.includes('function handleLogin()')) {
+                    test3.innerHTML = '<p style="color: green;">✅ _15/code.html has handleLogin() function</p>';
+                } else {
+                    test3.innerHTML = '<p style="color: red;">❌ handleLogin() function not found in _15/code.html</p>';
+                }
+                
+                // Test 4: _15 form validation
+                const test4 = document.getElementById('test4-result');
+                const hasOnclick = html15.includes('onclick="handleLogin()"');
+                const hasEmailValidation = html15.includes('email.includes(\'@gmail.com\')');
+                const hasPasswordToggle = html15.includes('visibility_off') || html15.includes('visibility');
+                
+                if (hasOnclick && hasEmailValidation && hasPasswordToggle) {
+                    test4.innerHTML = '<p style="color: green;">✅ Form validation and password toggle implemented</p>';
+                } else {
+                    let missing = [];
+                    if (!hasOnclick) missing.push('onclick handler');
+                    if (!hasEmailValidation) missing.push('email validation');
+                    if (!hasPasswordToggle) missing.push('password toggle');
+                    test4.innerHTML = `<p style="color: red;">❌ Missing: ${missing.join(', ')}</p>`;
+                }
+                
+                // Update test result boxes
+                document.querySelectorAll('.test-result').forEach(box => {
+                    box.classList.remove('warning');
+                    const result = box.querySelector('p[style*="color: green"]') ? 'success' : 'error';
+                    box.classList.add(result);
                 });
+                
+                results.innerHTML += '<div class="test-result success"><p>✅ All automated tests completed. Please perform manual testing as described above.</p></div>';
+            })
+            .catch(error => {
+                results.innerHTML += '<div class="test-result error"><p>❌ Error running tests: ' + error.message + '</p></div>';
+            });
         }
         
         // Run tests on page load

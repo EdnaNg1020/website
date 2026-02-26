@@ -15,6 +15,13 @@
                         "tea-deep": "#5D4037",
                         "tea-cream": "#FAF7F0",
                         "primary": "#4CAF50",
+                        // 黑暗模式專用顏色 - 提高對比度
+                        "dark-bg": "#121612",      // 更深的背景，提高對比度
+                        "dark-card": "#1E241C",    // 更深的卡片
+                        "dark-text": "#FFFFFF",    // 純白色文字，最高對比度
+                        "dark-border": "#2D3529",  // 深茶色邊框
+                        "dark-muted": "#A0B096",   // 更亮的次要文字
+                        "dark-accent": "#4CAF50",  // 主要顏色在黑暗模式下的變體
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -53,26 +60,26 @@
     }
   </style>
   </head>
-<body class="bg-tea-cream text-tea-deep font-display min-h-screen">
-<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] shadow-2xl">
-<header class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 ios-blur flex items-center gap-4">
-<button class="size-10 rounded-full flex items-center justify-center active:bg-tea-green/50 transition-colors">
+<body class="bg-tea-cream text-tea-deep font-display min-h-screen dark:bg-dark-bg dark:text-dark-text">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] dark:bg-dark-card shadow-2xl">
+<header class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 dark:bg-dark-card/90 ios-blur flex items-center justify-between">
+<button class="size-10 rounded-full flex items-center justify-center active:bg-tea-green/50 transition-colors hover:bg-tea-green/30" onclick="handleBack()">
 <span class="material-symbols-outlined text-tea-deep">arrow_back_ios_new</span>
 </button>
 <div>
-<h1 class="text-xl font-bold tracking-tight text-tea-deep">批次數據導入</h1>
-<p class="text-[10px] font-semibold text-tea-deep/50 uppercase tracking-widest mt-0.5">Batch Data Import</p>
+<h1 class="text-xl font-bold tracking-tight text-tea-deep dark:text-dark-text">批次數據導入</h1>
+<p class="text-[10px] font-semibold text-tea-deep/50 dark:text-dark-muted uppercase tracking-widest mt-0.5">Batch Data Import</p>
 </div>
 </header>
 <main class="flex-1 px-5 pb-32 space-y-8 mt-4">
 <section>
 <div class="bg-tea-green/40 p-2 rounded-tea">
-<div class="dashed-border bg-tea-green flex flex-col items-center justify-center py-12 px-6 text-center group cursor-pointer active:scale-[0.99] transition-transform">
-<div class="size-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4">
+<div class="dashed-border bg-tea-green flex flex-col items-center justify-center py-12 px-6 text-center group cursor-pointer active:scale-[0.99] transition-transform hover:bg-tea-green/80" onclick="document.getElementById('fileInput').click()" id="uploadArea">
+<div class="size-16 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center shadow-sm mb-4">
 <span class="material-symbols-outlined text-tea-deep text-3xl">cloud_upload</span>
 </div>
-<h3 class="font-bold text-tea-deep mb-1">點擊或拖移檔案至此</h3>
-<p class="text-xs text-tea-deep/60">支援 .xlsx, .csv 格式 (最大 50MB)</p>
+<h3 class="font-bold text-tea-deep dark:text-gray-300 mb-1">點擊或拖移檔案至此</h3>
+<p class="text-xs text-tea-deep/60 dark:text-gray-500">支援 .xlsx, .csv 格式 (最大 50MB)</p>
 </div>
 </div>
 <div class="mt-4 flex items-center gap-3 px-1">
@@ -86,7 +93,7 @@
 <span class="text-[10px] font-bold text-tea-deep/40 uppercase tracking-wider">Recent Activities</span>
 </div>
 <div class="space-y-3">
-<div class="bg-white p-4 rounded-tea border border-tea-green card-shadow">
+<div class="bg-white dark:bg-gray-700 p-4 rounded-tea border border-tea-green dark:border-gray-600 card-shadow">
 <div class="flex items-start gap-4">
 <div class="size-10 rounded-xl bg-tea-green flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-tea-deep">description</span>
@@ -123,17 +130,291 @@
 </div>
 </div>
 </section>
+
+<!-- Analyze Button (moved from fixed position to main content) -->
+<section class="mt-8 px-1">
+  <button class="w-full bg-tea-deep/20 text-tea-deep/60 font-bold py-4 rounded-tea flex items-center justify-center gap-2 cursor-not-allowed transition-all" id="analyzeButton" onclick="handleAnalyze()" disabled>
+    <span>確認並執行分析</span>
+    <span class="material-symbols-outlined text-sm">analytics</span>
+  </button>
+  <p class="text-center text-[10px] text-tea-deep/40 mt-3">請先上傳檔案以開始分析程序</p>
+</section>
 </main>
-<div class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 ios-blur border-t border-tea-green px-5 pt-4 pb-10 z-[60]">
-<button class="w-full bg-tea-deep/20 text-white font-bold py-4 rounded-tea flex items-center justify-center gap-2 cursor-not-allowed transition-all" disabled="">
-<span>確認並執行分析</span>
-<span class="material-symbols-outlined text-sm">analytics</span>
-</button>
-<p class="text-center text-[10px] text-tea-deep/40 mt-3">請先上傳檔案以開始分析程序</p>
-</div>
-<nav class="invisible pointer-events-none">
-<div class="h-24"></div>
+<nav class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 dark:bg-dark-card/90 ios-blur border-t border-tea-green dark:border-dark-border px-8 pb-8 pt-3 z-[60]">
+  <div class="flex justify-between items-center">
+    <a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_8/code.html">
+      <span class="material-symbols-outlined">dashboard</span>
+      <p class="text-[10px] font-bold">總覽</p>
+    </a>
+    <a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_2/code.html">
+      <span class="material-symbols-outlined">analytics</span>
+      <p class="text-[10px] font-bold">價值分析</p>
+    </a>
+    <div class="relative -top-6">
+      <button class="size-14 bg-tea-deep dark:bg-dark-border rounded-2xl shadow-lg shadow-tea-deep/20 dark:shadow-dark-border/30 flex items-center justify-center text-white dark:text-dark-text active:scale-95 transition-transform hover:bg-tea-deep/90 dark:hover:bg-dark-border/80" onclick="handleQuickUpload()">
+        <span class="material-symbols-outlined text-3xl">upload</span>
+      </button>
+    </div>
+    <a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_1/code.html">
+      <span class="material-symbols-outlined">target</span>
+      <p class="text-[10px] font-bold">精準行銷</p>
+    </a>
+    <a class="flex flex-col items-center gap-1 text-tea-deep dark:text-dark-text hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="#">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">database</span>
+      <p class="text-[10px] font-bold">數據導入</p>
+    </a>
+  </div>
 </nav>
 </div>
+<!-- Hidden file input -->
+<input type="file" id="fileInput" class="hidden" accept=".xlsx,.csv,.xls" onchange="handleFileSelect(event)">
 
+<script>
+  // Dark mode functionality
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    const darkModeIcon = document.querySelector('.dark-mode-icon');
+    const lightModeIcon = document.querySelector('.light-mode-icon');
+    
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
+      darkModeIcon.classList.remove('hidden');
+      lightModeIcon.classList.add('hidden');
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
+      darkModeIcon.classList.add('hidden');
+      lightModeIcon.classList.remove('hidden');
+    }
+  }
+
+  // Initialize dark mode based on user preference
+  function initializeDarkMode() {
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const html = document.documentElement;
+    const darkModeIcon = document.querySelector('.dark-mode-icon');
+    const lightModeIcon = document.querySelector('.light-mode-icon');
+    
+    if (savedMode === 'true' || (savedMode === null && prefersDark)) {
+      html.classList.add('dark');
+      darkModeIcon.classList.add('hidden');
+      lightModeIcon.classList.remove('hidden');
+    } else {
+      html.classList.remove('dark');
+      darkModeIcon.classList.remove('hidden');
+      lightModeIcon.classList.add('hidden');
+    }
+  }
+
+  // Initialize dark mode on page load
+  document.addEventListener('DOMContentLoaded', initializeDarkMode);
+  // Back button functionality
+  function handleBack() {
+    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+      history.back();
+    } else {
+      window.location.href = '../_8/code.html';
+    }
+  }
+
+  // File upload functionality
+  function handleQuickUpload() {
+    document.getElementById('fileInput').click();
+  }
+
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const fileName = file.name;
+    const fileSize = (file.size / (1024 * 1024)).toFixed(1); // MB
+    const fileType = fileName.split('.').pop().toUpperCase();
+    
+    // Validate file type
+    const validTypes = ['xlsx', 'csv', 'xls'];
+    if (!validTypes.includes(fileType.toLowerCase())) {
+      alert('錯誤：僅支援 .xlsx, .csv, .xls 格式');
+      return;
+    }
+    
+    // Validate file size (max 50MB)
+    if (file.size > 50 * 1024 * 1024) {
+      alert('錯誤：檔案大小超過 50MB 限制');
+      return;
+    }
+    
+    // Update UI to show upload in progress
+    const uploadArea = document.getElementById('uploadArea');
+    const analyzeButton = document.getElementById('analyzeButton');
+    const uploadText = uploadArea.querySelector('h3');
+    const uploadSubtext = uploadArea.querySelector('p');
+    
+    uploadText.textContent = '上傳中...';
+    uploadSubtext.textContent = `${fileName} (${fileSize} MB)`;
+    uploadArea.classList.remove('hover:bg-tea-green/80');
+    uploadArea.classList.add('bg-primary/20');
+    
+    // Simulate upload progress
+    setTimeout(() => {
+      uploadText.textContent = '上傳成功！';
+      uploadSubtext.textContent = `${fileName} (${fileSize} MB) - ${fileType} 格式`;
+      uploadArea.classList.remove('bg-primary/20');
+      uploadArea.classList.add('bg-green-100');
+      
+      // Enable analyze button
+      analyzeButton.disabled = false;
+      analyzeButton.classList.remove('bg-tea-deep/20', 'cursor-not-allowed');
+      analyzeButton.classList.add('bg-tea-deep', 'hover:bg-tea-deep/90');
+      
+      // Update instruction text
+      const instructionText = document.querySelector('p.text-center.text-\\[10px\\].text-tea-deep\\/40');
+      if (instructionText) {
+        instructionText.textContent = '檔案已上傳，點擊下方按鈕開始分析';
+      }
+      
+      // Add to recent uploads list
+      addToRecentUploads(fileName, fileSize, fileType);
+      
+      // Reset file input
+      event.target.value = '';
+    }, 1500);
+  }
+
+  function addToRecentUploads(fileName, fileSize, fileType) {
+    const recentActivities = document.querySelector('.space-y-3');
+    if (!recentActivities) return;
+    
+    const newUpload = document.createElement('div');
+    newUpload.className = 'bg-white p-4 rounded-tea border border-tea-green card-shadow';
+    newUpload.innerHTML = `
+      <div class="flex items-start gap-4">
+        <div class="size-10 rounded-xl bg-tea-green flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-tea-deep">description</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-start">
+            <h4 class="text-sm font-bold text-tea-deep truncate">${fileName}</h4>
+            <span class="text-[10px] font-bold text-primary">0%</span>
+          </div>
+          <p class="text-[10px] text-tea-deep/40 mt-0.5">${new Date().toLocaleDateString('zh-TW')} · ${fileSize} MB · ${fileType}</p>
+          <div class="mt-3 h-1.5 w-full bg-tea-green rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full upload-progress" style="width: 0%"></div>
+          </div>
+          <p class="text-[10px] font-bold text-tea-deep/60 mt-2 flex items-center gap-1">
+            <span class="size-1 bg-tea-deep/20 rounded-full animate-pulse"></span>
+            等待分析佇列中...
+          </p>
+        </div>
+      </div>
+    `;
+    
+    // Insert at the beginning
+    recentActivities.insertBefore(newUpload, recentActivities.firstChild);
+    
+    // Simulate progress animation
+    setTimeout(() => {
+      const progressBar = newUpload.querySelector('.upload-progress');
+      if (progressBar) {
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += 5;
+          progressBar.style.width = `${progress}%`;
+          
+          if (progress >= 100) {
+            clearInterval(interval);
+            const statusSpan = newUpload.querySelector('.text-\\[10px\\].font-bold.text-primary');
+            if (statusSpan) {
+              statusSpan.textContent = '100%';
+              statusSpan.classList.remove('text-primary');
+              statusSpan.classList.add('text-green-500');
+            }
+            
+            const statusText = newUpload.querySelector('.text-\\[10px\\].font-bold.text-tea-deep\\/60');
+            if (statusText) {
+              statusText.innerHTML = '<span class="size-1 bg-green-500 rounded-full"></span> 分析完成';
+              statusText.classList.remove('text-tea-deep/60');
+              statusText.classList.add('text-green-600');
+            }
+          }
+        }, 100);
+      }
+    }, 2000);
+  }
+
+  // Analyze button functionality
+  function handleAnalyze() {
+    const analyzeButton = document.getElementById('analyzeButton');
+    const originalText = analyzeButton.innerHTML;
+    
+    // Show loading state
+    analyzeButton.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm mr-2">refresh</span>分析中...';
+    analyzeButton.disabled = true;
+    
+    // Simulate analysis process
+    setTimeout(() => {
+      analyzeButton.innerHTML = '<span class="material-symbols-outlined text-sm mr-2">check_circle</span>分析完成！';
+      analyzeButton.classList.remove('bg-tea-deep', 'hover:bg-tea-deep/90');
+      analyzeButton.classList.add('bg-green-500', 'hover:bg-green-600');
+      
+      // Show success message
+      alert('批次數據分析完成！\n\n分析結果：\n• 成功處理 1,248 筆會員資料\n• 識別出 42 位高流失風險會員\n• 發現 3 個消費趨勢模式\n\n已自動匯入到精準行銷模組。');
+      
+      // Redirect to dashboard after 3 seconds
+      setTimeout(() => {
+        window.location.href = '../_8/code.html';
+      }, 3000);
+    }, 3000);
+  }
+
+  // Drag and drop functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, preventDefaults, false);
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    // Highlight drop area when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+      uploadArea.classList.add('bg-primary/30');
+      uploadArea.classList.add('border-2', 'border-primary');
+    }
+    
+    function unhighlight() {
+      uploadArea.classList.remove('bg-primary/30');
+      uploadArea.classList.remove('border-2', 'border-primary');
+    }
+    
+    // Handle dropped files
+    uploadArea.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      
+      if (files.length > 0) {
+        // Create a fake event object for handleFileSelect
+        const event = { target: { files: files } };
+        handleFileSelect(event);
+      }
+    }
+  });
+</script>
 </body></html>

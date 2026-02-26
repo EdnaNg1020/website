@@ -15,6 +15,13 @@
                         "tea-deep": "#5D4037",
                         "tea-cream": "#FAF7F0",
                         "primary": "#4CAF50",
+                        // 黑暗模式專用顏色 - 提高對比度
+                        "dark-bg": "#121612",      // 更深的背景，提高對比度
+                        "dark-card": "#1E241C",    // 更深的卡片
+                        "dark-text": "#FFFFFF",    // 純白色文字，最高對比度
+                        "dark-border": "#2D3529",  // 深茶色邊框
+                        "dark-muted": "#A0B096",   // 更亮的次要文字
+                        "dark-accent": "#4CAF50",  // 主要顏色在黑暗模式下的變體
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -47,13 +54,28 @@
     body {
       min-height: max(884px, 100dvh);
     }
+    
+    /* Fade transitions for analyzer */
+    .fade-transition {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .fade-out {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
   </head>
-<body class="bg-tea-cream text-tea-deep font-display min-h-screen">
-<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] shadow-2xl">
-<header class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 ios-blur flex items-center justify-between">
+<body class="bg-tea-cream text-tea-deep font-display min-h-screen dark:bg-dark-bg dark:text-dark-text">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] dark:bg-gray-800 shadow-2xl">
+<header class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 dark:bg-gray-800/80 ios-blur flex items-center justify-between">
 <div class="flex items-center gap-3">
-<button class="size-10 rounded-full bg-white flex items-center justify-center border border-tea-green hover:bg-tea-green/50 transition-colors" onclick="handleBack()">
+<button class="size-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center border border-tea-green dark:border-gray-600 hover:bg-tea-green/50 dark:hover:bg-gray-600 transition-colors" onclick="handleBack()">
 <span class="material-symbols-outlined text-tea-deep">arrow_back_ios_new</span>
 </button>
 <div>
@@ -61,12 +83,12 @@
 <p class="text-[10px] font-semibold text-tea-deep/50 uppercase tracking-widest mt-0.5">Periodic Trend Report</p>
 </div>
 </div>
-<button class="size-10 rounded-full bg-white flex items-center justify-center border border-tea-green hover:bg-tea-green/50 transition-colors" onclick="openCalendar()">
+<button class="size-10 rounded-full bg-white dark:bg-dark-card flex items-center justify-center border border-tea-green dark:border-dark-border hover:bg-tea-green/50 dark:hover:bg-dark-border transition-colors" onclick="openCalendar()">
 <span class="material-symbols-outlined text-[22px]">calendar_today</span>
 </button>
 </header>
 <main class="flex-1 px-5 pb-32 space-y-6">
-<section class="bg-white rounded-tea p-5 card-shadow border border-tea-green/50">
+<section class="bg-white dark:bg-gray-700 rounded-tea p-5 card-shadow border border-tea-green/50 dark:border-gray-600">
 <div class="flex items-center justify-between mb-6">
 <div>
 <h3 class="font-bold text-tea-deep text-sm">近六個月流失率趨勢</h3>
@@ -102,7 +124,158 @@
 <span>5月</span>
 </div>
 </section>
-<div class="flex items-center justify-between px-1">
+
+<!-- 會員價值分析儀互動功能 -->
+<section class="bg-white dark:bg-gray-700 rounded-tea p-5 card-shadow border border-tea-green/50 dark:border-gray-600 mt-6">
+    <div class="flex items-center justify-between mb-5">
+        <span class="text-xs font-bold text-tea-deep/60 uppercase tracking-widest">會員價值即時分析儀</span>
+        <span class="text-[10px] bg-tea-green text-tea-deep px-2 py-0.5 rounded-full font-bold">動態模擬中</span>
+    </div>
+    <div class="flex flex-col gap-6">
+        <div class="flex-1">
+            <div class="flex justify-between mb-2">
+                <span class="text-xs text-tea-deep/70 font-semibold uppercase">入會時長 (月)</span>
+                <span class="text-xs font-bold text-tea-deep" id="member-months-val">12</span>
+            </div>
+            <input class="w-full h-1.5 bg-tea-green rounded-full appearance-none accent-tea-deep cursor-pointer" id="member-months-input" max="60" min="1" type="range" value="12"/>
+        </div>
+        <div class="flex-1">
+            <div class="flex justify-between mb-2">
+                <span class="text-xs text-tea-deep/70 font-semibold uppercase">滿意度設定</span>
+                <span class="text-xs font-bold text-tea-deep" id="satisfaction-val">4.0</span>
+            </div>
+            <input class="w-full h-1.5 bg-tea-green rounded-full appearance-none accent-tea-deep cursor-pointer" id="satisfaction-input" max="5" min="1" step="0.1" type="range" value="4.0"/>
+        </div>
+        <button class="w-full flex items-center justify-center gap-2 py-3 bg-tea-green hover:bg-tea-green/80 rounded-tea text-tea-deep font-bold text-sm shadow-sm transition-all active:scale-95" onclick="resetAnalysis()">
+            <span class="material-symbols-outlined text-sm">restart_alt</span>
+            重新評估 (Reset)
+        </button>
+    </div>
+</section>
+
+<div class="fade-transition space-y-4 mt-6" id="results-container">
+    <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white dark:bg-gray-700 p-4 rounded-tea card-shadow border border-tea-green/50 dark:border-gray-600">
+            <div class="flex items-center gap-1.5 mb-2">
+                <span class="material-symbols-outlined text-tea-deep/40 text-sm">verified</span>
+                <p class="text-[10px] text-tea-deep/50 font-bold uppercase">忠誠度指數</p>
+            </div>
+            <div class="flex items-baseline gap-1">
+                <span class="text-2xl font-black text-tea-deep" id="loyalty-index">84.2</span>
+                <span class="text-[10px] font-bold text-tea-deep/60">%</span>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-gray-700 p-4 rounded-tea card-shadow border border-tea-green/50 dark:border-gray-600">
+            <div class="flex items-center gap-1.5 mb-2">
+                <span class="material-symbols-outlined text-red-700/60 text-sm">warning</span>
+                <p class="text-[10px] text-tea-deep/50 font-bold uppercase">流失風險</p>
+            </div>
+            <div class="flex items-baseline gap-1">
+                <span class="text-2xl font-black text-red-800/80" id="churn-risk">12.5</span>
+                <span class="text-[10px] font-bold text-red-800/80">%</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white dark:bg-gray-700 rounded-tea p-5 card-shadow border border-tea-green/50 dark:border-gray-600">
+        <div class="flex justify-between items-start mb-6">
+            <div>
+                <h3 class="text-tea-deep text-base font-bold">會員價值維度對比</h3>
+                <p class="text-[10px] text-tea-deep/50 mt-0.5">多維度核心指標分佈比對</p>
+            </div>
+            <span class="material-symbols-outlined text-tea-deep/30">equalizer</span>
+        </div>
+        <div class="flex gap-4 justify-start mb-8 overflow-x-auto pb-2">
+            <div class="flex items-center gap-1.5 whitespace-nowrap">
+                <div class="size-2.5 rounded-full bg-tea-deep"></div>
+                <span class="text-[9px] font-bold text-tea-deep/70">當前數值</span>
+            </div>
+            <div class="flex items-center gap-1.5 whitespace-nowrap">
+                <div class="size-2.5 rounded-full bg-tea-green/60"></div>
+                <span class="text-[9px] font-bold text-tea-deep/70">長期均值</span>
+            </div>
+            <div class="flex items-center gap-1.5 whitespace-nowrap">
+                <div class="size-2.5 rounded-full bg-tea-green border border-tea-deep/10"></div>
+                <span class="text-[9px] font-bold text-tea-deep/70">新進參考</span>
+            </div>
+        </div>
+        <div class="relative h-44 flex items-end justify-between px-1 border-b border-tea-deep/10 pb-2 gap-2">
+            <div class="flex flex-col items-center flex-1">
+                <div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+                    <div class="w-2.5 bg-tea-deep rounded-t-sm h-[80%]"></div>
+                    <div class="w-2.5 bg-tea-green/60 rounded-t-sm h-[76%]"></div>
+                    <div class="w-2.5 bg-tea-green border-x border-t border-tea-deep/10 rounded-t-sm h-[68%]"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center flex-1">
+                <div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+                    <div class="w-2.5 bg-tea-deep rounded-t-sm h-[60%]"></div>
+                    <div class="w-2.5 bg-tea-green/60 rounded-t-sm h-[85%]"></div>
+                    <div class="w-2.5 bg-tea-green border-x border-t border-tea-deep/10 rounded-t-sm h-[30%]"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center flex-1">
+                <div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+                    <div class="w-2.5 bg-tea-deep rounded-t-sm h-[70%]"></div>
+                    <div class="w-2.5 bg-tea-green/60 rounded-t-sm h-[82%]"></div>
+                    <div class="w-2.5 bg-tea-green border-x border-t border-tea-deep/10 rounded-t-sm h-[40%]"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center flex-1">
+                <div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+                    <div class="w-2.5 bg-tea-deep rounded-t-sm h-[45%]"></div>
+                    <div class="w-2.5 bg-tea-green/60 rounded-t-sm h-[35%]"></div>
+                    <div class="w-2.5 bg-tea-green border-x border-t border-tea-deep/10 rounded-t-sm h-[60%]"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center flex-1">
+                <div class="flex items-end gap-[1.5px] h-32 w-full justify-center">
+                    <div class="w-2.5 bg-tea-deep rounded-t-sm h-[75%]"></div>
+                    <div class="w-2.5 bg-tea-green/60 rounded-t-sm h-[90%]"></div>
+                    <div class="w-2.5 bg-tea-green border-x border-t border-tea-deep/10 rounded-t-sm h-[50%]"></div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-between mt-2 px-0 gap-1">
+            <span class="text-[8px] font-bold text-tea-deep/40 text-center flex-1 leading-tight">滿意度</span>
+            <span class="text-[8px] font-bold text-tea-deep/40 text-center flex-1 leading-tight">到店頻次</span>
+            <span class="text-[8px] font-bold text-tea-deep/40 text-center flex-1 leading-tight">重複購買</span>
+            <span class="text-[8px] font-bold text-tea-deep/40 text-center flex-1 leading-tight">活動參與</span>
+            <span class="text-[8px] font-bold text-tea-deep/40 text-center flex-1 leading-tight">忠誠指數</span>
+        </div>
+    </div>
+    
+    <div class="bg-tea-deep rounded-tea p-6 shadow-xl relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 size-40 bg-tea-green/10 blur-3xl rounded-full"></div>
+        <div class="flex items-center gap-4 mb-6 relative z-10">
+            <div class="bg-tea-green size-10 rounded-xl flex items-center justify-center text-tea-deep">
+                <span class="material-symbols-outlined text-2xl font-bold">bolt</span>
+            </div>
+            <div>
+                <h4 class="font-bold text-tea-green text-base">動態洞察與模型建議</h4>
+                <p class="text-[10px] text-tea-green/50">基於 2024 Q2 會員大數據分析</p>
+            </div>
+        </div>
+        <div class="space-y-4 relative z-10">
+            <div class="p-4 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm">
+                <div class="flex gap-3">
+                    <span class="material-symbols-outlined text-tea-green text-lg">psychology</span>
+                    <div class="flex-1">
+                        <p class="text-xs text-tea-green/90 leading-relaxed font-medium">
+                            當前預測偏差值為 <span class="text-tea-green font-bold text-base inline-block px-1" id="insight-diff">0.19</span> 分。
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
+                    <span class="text-[9px] text-tea-green/40 font-medium">📊 數據源：2024 Q2</span>
+                    <span class="text-[9px] bg-tea-green/20 text-tea-green px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Positive</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex items-center justify-between px-1 mt-8">
 <h3 class="font-bold text-tea-deep/80 text-sm">季度成長對比 (Q3 vs Q2)</h3>
 <span class="text-[10px] font-bold text-tea-deep/40 px-2 py-1 bg-tea-green rounded-full">數據更新：2024/05/22</span>
 </div>
@@ -166,26 +339,26 @@
 </div>
 </section>
 </main>
-<nav class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 ios-blur border-t border-tea-green px-8 pb-8 pt-3 z-[60]">
+<nav class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 dark:bg-dark-card/90 ios-blur border-t border-tea-green dark:border-dark-border px-8 pb-8 pt-3 z-[60]">
 <div class="flex justify-between items-center">
-  <a class="flex flex-col items-center gap-1 text-tea-deep/40 hover:text-tea-deep transition-colors" href="../_8/code.html">
+  <a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_8/code.html">
     <span class="material-symbols-outlined">dashboard</span>
     <p class="text-[10px] font-bold">總覽</p>
   </a>
-  <a class="flex flex-col items-center gap-1 text-tea-deep" href="#">
+  <a class="flex flex-col items-center gap-1 text-tea-deep dark:text-dark-text" href="#">
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">analytics</span>
     <p class="text-[10px] font-bold">價值分析</p>
   </a>
   <div class="relative -top-6">
-    <button class="size-14 bg-tea-deep rounded-2xl shadow-lg shadow-tea-deep/20 flex items-center justify-center text-white active:scale-95 transition-transform hover:bg-tea-deep/90" onclick="handleAddReport()">
+    <button class="size-14 bg-tea-deep dark:bg-dark-border rounded-2xl shadow-lg shadow-tea-deep/20 dark:shadow-dark-border/30 flex items-center justify-center text-white dark:text-dark-text active:scale-95 transition-transform hover:bg-tea-deep/90 dark:hover:bg-dark-border/80" onclick="handleAddReport()">
       <span class="material-symbols-outlined text-3xl">add</span>
     </button>
   </div>
-  <a class="flex flex-col items-center gap-1 text-tea-deep/40 hover:text-tea-deep transition-colors" href="../_1/code.html">
+  <a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_1/code.html">
     <span class="material-symbols-outlined">target</span>
     <p class="text-[10px] font-bold">精準行銷</p>
   </a>
-  <a class="flex flex-col items-center gap-1 text-tea-deep/40 hover:text-tea-deep transition-colors" href="../_3/code.html">
+  <a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_3/code.html">
     <span class="material-symbols-outlined">person</span>
     <p class="text-[10px] font-bold">個人中心</p>
   </a>
@@ -193,36 +366,36 @@
 </nav>
 </div>
 <!-- Calendar Modal -->
-<div id="calendarModal" class="fixed inset-0 z-50 hidden">
+<div id="calendarModal" class="fixed inset-0 z-[70] hidden">
   <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeCalendar()"></div>
-  <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto">
+  <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto">
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-lg font-bold text-tea-deep">選擇日期範圍</h3>
-      <button onclick="closeCalendar()" class="size-8 rounded-full bg-tea-green/30 flex items-center justify-center">
+      <h3 class="text-lg font-bold text-tea-deep dark:text-gray-300">選擇日期範圍</h3>
+      <button onclick="closeCalendar()" class="size-8 rounded-full bg-tea-green/30 dark:bg-gray-700 flex items-center justify-center">
         <span class="material-symbols-outlined text-tea-deep">close</span>
       </button>
     </div>
     <div class="grid grid-cols-2 gap-4 mb-6">
       <div>
-        <label class="block text-sm font-medium text-tea-deep/70 mb-2">開始日期</label>
-        <input type="date" id="startDate" class="w-full p-3 border border-tea-green/50 rounded-tea bg-tea-green/20 text-tea-deep" value="2024-01-01">
+        <label class="block text-sm font-medium text-tea-deep/70 dark:text-gray-400 mb-2">開始日期</label>
+        <input type="date" id="startDate" class="w-full p-3 border border-tea-green/50 dark:border-gray-600 rounded-tea bg-tea-green/20 dark:bg-gray-700 text-tea-deep dark:text-gray-300" value="2024-01-01">
       </div>
       <div>
-        <label class="block text-sm font-medium text-tea-deep/70 mb-2">結束日期</label>
-        <input type="date" id="endDate" class="w-full p-3 border border-tea-green/50 rounded-tea bg-tea-green/20 text-tea-deep" value="2024-05-22">
+        <label class="block text-sm font-medium text-tea-deep/70 dark:text-gray-400 mb-2">結束日期</label>
+        <input type="date" id="endDate" class="w-full p-3 border border-tea-green/50 dark:border-gray-600 rounded-tea bg-tea-green/20 dark:bg-gray-700 text-tea-deep dark:text-gray-300" value="2024-05-22">
       </div>
     </div>
     <div class="space-y-3">
-      <h4 class="font-bold text-tea-deep text-sm">快速選擇</h4>
+      <h4 class="font-bold text-tea-deep dark:text-gray-300 text-sm">快速選擇</h4>
       <div class="grid grid-cols-3 gap-2">
-        <button onclick="selectDateRange('week')" class="py-2 bg-tea-green/30 rounded-tea text-tea-deep text-sm font-medium hover:bg-tea-green">本週</button>
-        <button onclick="selectDateRange('month')" class="py-2 bg-tea-green/30 rounded-tea text-tea-deep text-sm font-medium hover:bg-tea-green">本月</button>
-        <button onclick="selectDateRange('quarter')" class="py-2 bg-tea-green/30 rounded-tea text-tea-deep text-sm font-medium hover:bg-tea-green">本季</button>
+        <button onclick="selectDateRange('week')" class="py-2 bg-tea-green/30 dark:bg-gray-700 rounded-tea text-tea-deep dark:text-gray-300 text-sm font-medium hover:bg-tea-green dark:hover:bg-gray-600">本週</button>
+        <button onclick="selectDateRange('month')" class="py-2 bg-tea-green/30 dark:bg-gray-700 rounded-tea text-tea-deep dark:text-gray-300 text-sm font-medium hover:bg-tea-green dark:hover:bg-gray-600">本月</button>
+        <button onclick="selectDateRange('quarter')" class="py-2 bg-tea-green/30 dark:bg-gray-700 rounded-tea text-tea-deep dark:text-gray-300 text-sm font-medium hover:bg-tea-green dark:hover:bg-gray-600">本季</button>
       </div>
     </div>
     <div class="mt-8 flex gap-3">
-      <button onclick="closeCalendar()" class="flex-1 py-3 border border-tea-green text-tea-deep rounded-tea font-medium">取消</button>
-      <button onclick="applyDateRange()" class="flex-1 py-3 bg-tea-deep text-white rounded-tea font-medium">套用篩選</button>
+      <button onclick="closeCalendar()" class="flex-1 py-3 border border-tea-green dark:border-gray-600 text-tea-deep dark:text-gray-300 rounded-tea font-medium">取消</button>
+      <button onclick="applyDateRange()" class="flex-1 py-3 bg-tea-deep dark:bg-gray-700 text-white dark:text-gray-300 rounded-tea font-medium">套用篩選</button>
     </div>
   </div>
 </div>
@@ -291,8 +464,191 @@
     // In a real implementation, this would open a form or redirect
   }
 
+  // Member Value Analyzer Functions
+  function animateValue(obj, start, end, duration, decimals = 1) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const value = (progress * (end - start) + start).toFixed(decimals);
+      obj.innerHTML = value;
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  // Evaluation functions for member value analyzer
+  function calculateLoyaltyIndex(memberMonths, satisfaction) {
+    // Base loyalty increases with membership duration and satisfaction
+    // Formula: base(50) + months_contribution + satisfaction_contribution
+    const monthsContribution = Math.min(memberMonths * 0.6, 30); // Max 30 from months
+    const satisfactionContribution = (satisfaction - 1) * 8.75; // 1-5 scale to 0-35
+    
+    let loyaltyIndex = 50 + monthsContribution + satisfactionContribution;
+    
+    // Add some randomness for realism (but keep it stable for same inputs)
+    const stableRandom = (memberMonths * 13 + satisfaction * 7) % 20;
+    loyaltyIndex += (stableRandom - 10) * 0.3; // +/- 3 points
+    
+    // Ensure within bounds
+    return Math.min(Math.max(loyaltyIndex, 20), 98);
+  }
+
+  function calculateChurnRisk(memberMonths, satisfaction) {
+    // Churn risk decreases with membership duration and satisfaction
+    // Base risk formula
+    const baseRisk = 30;
+    const monthsReduction = Math.min(memberMonths * 0.4, 15); // Longer membership reduces risk
+    const satisfactionReduction = (satisfaction - 1) * 3; // Higher satisfaction reduces risk
+    
+    let churnRisk = baseRisk - monthsReduction - satisfactionReduction;
+    
+    // Add some variability
+    const stableRandom = (memberMonths * 17 + satisfaction * 11) % 15;
+    churnRisk += (stableRandom - 7.5) * 0.4; // +/- 3 points
+    
+    // Ensure within bounds
+    return Math.min(Math.max(churnRisk, 2), 45);
+  }
+
+  function calculateInsightDiff(memberMonths, satisfaction) {
+    // Insight diff represents how far from optimal the current settings are
+    // Optimal: 24+ months, 4.5+ satisfaction
+    const optimalMonths = 24;
+    const optimalSatisfaction = 4.5;
+    
+    const monthsDiff = Math.abs(memberMonths - optimalMonths) / optimalMonths;
+    const satisfactionDiff = Math.abs(satisfaction - optimalSatisfaction) / optimalSatisfaction;
+    
+    const totalDiff = (monthsDiff * 0.6 + satisfactionDiff * 0.4) * 0.5;
+    
+    return Math.min(totalDiff, 0.5);
+  }
+
+  function evaluateAnalysis() {
+    // Get current slider values
+    const memberMonths = parseFloat(document.getElementById('member-months-input').value);
+    const satisfaction = parseFloat(document.getElementById('satisfaction-input').value);
+    
+    // Calculate values
+    const loyaltyIndex = calculateLoyaltyIndex(memberMonths, satisfaction);
+    const churnRisk = calculateChurnRisk(memberMonths, satisfaction);
+    const insightDiff = calculateInsightDiff(memberMonths, satisfaction);
+    
+    // Update UI with animation
+    const loyaltyElement = document.getElementById('loyalty-index');
+    const churnElement = document.getElementById('churn-risk');
+    const insightElement = document.getElementById('insight-diff');
+    
+    const currentLoyalty = parseFloat(loyaltyElement.textContent) || 0;
+    const currentChurn = parseFloat(churnElement.textContent) || 0;
+    const currentInsight = parseFloat(insightElement.textContent) || 0;
+    
+    // Animate to new values
+    animateValue(loyaltyElement, currentLoyalty, loyaltyIndex, 400, 1);
+    animateValue(churnElement, currentChurn, churnRisk, 400, 1);
+    animateValue(insightElement, currentInsight, insightDiff, 400, 2);
+    
+    // Update chart bars based on values (simplified - adjust heights)
+    updateChartBars(loyaltyIndex, churnRisk);
+    
+    return { loyaltyIndex, churnRisk, insightDiff };
+  }
+
+  function updateChartBars(loyaltyIndex, churnRisk) {
+    // Update the visual chart bars based on calculated values
+    // This is a simplified implementation - in a real app, this would update SVG or canvas
+    const currentValueBars = document.querySelectorAll('.bg-tea-deep');
+    const longTermBars = document.querySelectorAll('.bg-tea-green\\/60');
+    const newMemberBars = document.querySelectorAll('.bg-tea-green');
+    
+    // Example: adjust first bar (satisfaction dimension) based on loyalty index
+    if (currentValueBars.length > 0) {
+      // Convert loyalty index (20-98) to height percentage (30-95%)
+      const heightPercent = 30 + (loyaltyIndex - 20) * 0.83;
+      currentValueBars[0].style.height = `${heightPercent}%`;
+    }
+    
+    // Example: adjust second bar (churn risk dimension)
+    if (currentValueBars.length > 1) {
+      // Invert churn risk for visual (higher risk = shorter bar)
+      const heightPercent = 95 - (churnRisk - 2) * 2.16;
+      currentValueBars[1].style.height = `${heightPercent}%`;
+    }
+  }
+
+  function resetAnalysis() {
+    // Reset UI Values
+    document.getElementById('member-months-input').value = 12;
+    document.getElementById('satisfaction-input').value = 4.0;
+    document.getElementById('member-months-val').innerText = '12';
+    document.getElementById('satisfaction-val').innerText = '4.0';
+    const container = document.getElementById('results-container');
+    
+    // Calculate values for reset state
+    const loyaltyIndex = calculateLoyaltyIndex(12, 4.0);
+    const churnRisk = calculateChurnRisk(12, 4.0);
+    const insightDiff = calculateInsightDiff(12, 4.0);
+    
+    // Fade out
+    container.classList.add('fade-out');
+    setTimeout(() => {
+      // Initial values for animation
+      document.getElementById('loyalty-index').innerText = "0";
+      document.getElementById('churn-risk').innerText = "0";
+      document.getElementById('insight-diff').innerText = "0";
+      // Fade in
+      container.classList.remove('fade-out');
+      container.classList.add('fade-in');
+      // Animate counts using calculated values
+      animateValue(document.getElementById('loyalty-index'), 0, loyaltyIndex, 600, 1);
+      animateValue(document.getElementById('churn-risk'), 0, churnRisk, 600, 1);
+      animateValue(document.getElementById('insight-diff'), 0, insightDiff, 600, 2);
+      
+      // Update chart bars
+      updateChartBars(loyaltyIndex, churnRisk);
+      
+      setTimeout(() => {
+        container.classList.remove('fade-in');
+      }, 200);
+    }, 200);
+  }
+
   // Chart interaction
   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize analyzer event listeners
+    const memberMonthsInput = document.getElementById('member-months-input');
+    const satisfactionInput = document.getElementById('satisfaction-input');
+    
+    // Debounce function to prevent too many evaluations during rapid slider movement
+    let evaluationTimeout;
+    function debouncedEvaluate() {
+      clearTimeout(evaluationTimeout);
+      evaluationTimeout = setTimeout(() => {
+        evaluateAnalysis();
+      }, 150);
+    }
+    
+    if (memberMonthsInput) {
+      memberMonthsInput.addEventListener('input', (e) => {
+        document.getElementById('member-months-val').innerText = e.target.value;
+        debouncedEvaluate();
+      });
+    }
+    
+    if (satisfactionInput) {
+      satisfactionInput.addEventListener('input', (e) => {
+        document.getElementById('satisfaction-val').innerText = parseFloat(e.target.value).toFixed(1);
+        debouncedEvaluate();
+      });
+    }
+    
+    // Initial evaluation on page load
+    setTimeout(() => {
+      evaluateAnalysis();
+    }, 500);
     const chartPath = document.querySelector('svg path');
     const chartPoints = document.querySelectorAll('svg circle');
     
@@ -333,5 +689,46 @@
       }
     });
   });
+
+  // Dark mode functionality
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    const darkModeIcon = document.querySelector('.dark-mode-icon');
+    const lightModeIcon = document.querySelector('.light-mode-icon');
+    
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
+      darkModeIcon.classList.remove('hidden');
+      lightModeIcon.classList.add('hidden');
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
+      darkModeIcon.classList.add('hidden');
+      lightModeIcon.classList.remove('hidden');
+    }
+  }
+
+  // Initialize dark mode based on user preference
+  function initializeDarkMode() {
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const html = document.documentElement;
+    const darkModeIcon = document.querySelector('.dark-mode-icon');
+    const lightModeIcon = document.querySelector('.light-mode-icon');
+    
+    if (savedMode === 'true' || (savedMode === null && prefersDark)) {
+      html.classList.add('dark');
+      darkModeIcon.classList.add('hidden');
+      lightModeIcon.classList.remove('hidden');
+    } else {
+      html.classList.remove('dark');
+      darkModeIcon.classList.remove('hidden');
+      lightModeIcon.classList.add('hidden');
+    }
+  }
+
+  // Initialize dark mode on page load
+  document.addEventListener('DOMContentLoaded', initializeDarkMode);
 </script>
 </body></html>

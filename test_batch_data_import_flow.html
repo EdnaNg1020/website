@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批次數據導入頁面功能測試</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .test-step {
+            background: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .test-step h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.passed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .test-link {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #45a049;
+        }
+        .test-link.secondary {
+            background: #6c757d;
+        }
+        .test-link.secondary:hover {
+            background: #5a6268;
+        }
+        .instructions {
+            background: #e8f4f8;
+            border: 1px solid #b8daff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .feature-card h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .feature-card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .feature-card li {
+            margin: 5px 0;
+        }
+        .button-test {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .button-test h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .test-result {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .test-result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .upload-demo {
+            background: #e8f0e8;
+            border: 2px dashed #5d4037;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        .upload-demo:hover {
+            background: #d4e4d4;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>批次數據導入頁面功能測試</h1>
+        
+        <div class="instructions">
+            <h3>測試說明</h3>
+            <p>此測試驗證從首頁到批次數據導入頁面的完整導航流程，以及所有按鈕和檔案上傳功能是否正常運作。</p>
+            <p><strong>更新完成：</strong> 首頁的「批次數據導入」卡片已更新為指向 <code>_3/code.html</code></p>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 1: 首頁導航測試 <span class="status passed">已通過</span></h3>
+            <p>驗證首頁 (<code>_8/code.html</code>) 的「批次數據導入」卡片已正確更新：</p>
+            <a href="_8/code.html" class="test-link" target="_blank">測試首頁</a>
+            <div class="button-test">
+                <h4>測試項目：</h4>
+                <ol>
+                    <li>「核心分析模組」區塊中的「批次數據導入」卡片</li>
+                    <li>應為可點擊的連結（已從 <div> 改為 <a>）</li>
+                    <li>應跳轉到 <code>_3/code.html</code></li>
+                    <li>應有懸停效果（<code>hover:bg-tea-green/10</code>）</li>
+                </ol>
+                <div class="test-result success">
+                    ✅ 卡片已更新為 <code><a href="../_3/code.html"></code> 並添加懸停效果
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 2: 批次數據導入頁面功能測試 <span class="status pending">測試中</span></h3>
+            <p>驗證批次數據導入頁面 (<code>_3/code.html</code>) 的所有按鈕和上傳功能：</p>
+            <a href="_3/code.html" class="test-link" target="_blank">測試批次數據導入頁面</a>
+            
+            <div class="feature-list">
+                <div class="feature-card">
+                    <h4>🔙 返回按鈕</h4>
+                    <ul>
+                        <li>點擊左上角返回箭頭</li>
+                        <li>智能返回：有瀏覽記錄則返回，否則回儀表板</li>
+                        <li>懸停效果：<code>hover:bg-tea-green/30</code></li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📁 檔案上傳功能</h4>
+                    <ul>
+                        <li>點擊上傳區域或拖放檔案</li>
+                        <li>支援格式：.xlsx, .csv, .xls</li>
+                        <li>檔案大小限制：50MB</li>
+                        <li>上傳進度顯示</li>
+                        <li>成功後啟用分析按鈕</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📊 分析按鈕</h4>
+                    <ul>
+                        <li>初始狀態：禁用（灰色）</li>
+                        <li>上傳檔案後：啟用（綠色）</li>
+                        <li>點擊後顯示載入動畫</li>
+                        <li>模擬分析過程（3秒）</li>
+                        <li>完成後顯示結果並自動跳轉</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📋 上傳紀錄</h4>
+                    <ul>
+                        <li>顯示最近上傳檔案</li>
+                        <li>進度條動畫（0% → 100%）</li>
+                        <li>狀態標示：等待中、分析中、完成</li>
+                        <li>新上傳檔案自動加入列表</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="feature-list">
+                <div class="feature-card">
+                    <h4>📱 底部導航</h4>
+                    <ul>
+                        <li>總覽 → 儀表板 (<code>_8/code.html</code>)</li>
+                        <li>價值分析 → 價值分析頁面 (<code>_2/code.html</code>)</li>
+                        <li>快速上傳按鈕（中間加號）→ 觸發檔案選擇</li>
+                        <li>精準行銷 → 精準行銷頁面 (<code>_1/code.html</code>)</li>
+                        <li>數據導入 → 當前頁面（高亮顯示）</li>
+                        <li>懸停顏色變化</li>
+                        <li><strong>狀態：</strong> <span class="status passed">已實現</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="button-test">
+                <h4>檔案上傳演示：</h4>
+                <div class="upload-demo" onclick="demoUpload()">
+                    <h4>點擊此處測試上傳功能</h4>
+                    <p>（演示模式 - 不會實際傳輸檔案）</p>
+                </div>
+                <div id="demoResult" class="test-result info" style="display: none;">
+                    演示：模擬檔案上傳成功，分析按鈕已啟用
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-step">
+            <h3>步驟 3: 完整流程測試 <span class="status pending">進行中</span></h3>
+            <p>執行完整端到端測試：</p>
+            <ol>
+                <li>從首頁開始 (<code>_8/code.html</code>)</li>
+                <li>點擊「批次數據導入」卡片進入上傳頁面</li>
+                <li>測試所有互動功能：
+                    <ul>
+                        <li>點擊返回按鈕回到儀表板</li>
+                        <li>再次進入，測試檔案上傳功能</li>
+                        <li>測試拖放檔案功能（可拖放任何檔案演示）</li>
+                        <li>上傳後測試分析按鈕功能</li>
+                        <li>測試底部導航切換到其他頁面</li>
+                    </ul>
+                </li>
+                <li>完成分析後自動跳轉回儀表板</li>
+            </ol>
+            <a href="_8/code.html" class="test-link" target="_blank">開始完整測試</a>
+            <a href="test_value_analysis_flow.html" class="test-link secondary" target="_blank">查看價值分析測試</a>
+            <a href="test_precision_marketing_flow.html" class="test-link secondary" target="_blank">查看精準行銷測試</a>
+        </div>
+        
+        <div class="test-step">
+            <h3>實現的功能總結</h3>
+            <ul>
+                <li>✅ 首頁「批次數據導入」卡片更新為可點擊連結</li>
+                <li>✅ 智能返回按鈕（<code>handleBack()</code> 函數）</li>
+                <li>✅ 完整檔案上傳功能（點擊 + 拖放）</li>
+                <li>✅ 檔案驗證（格式、大小限制）</li>
+                <li>✅ 上傳進度顯示與視覺回饋</li>
+                <li>✅ 動態分析按鈕（禁用 → 啟用 → 載入 → 完成）</li>
+                <li>✅ 上傳紀錄列表與進度動畫</li>
+                <li>✅ 底部導航連結更新（5個項目全部可點擊）</li>
+                <li>✅ 快速上傳按鈕（底部導航中間）</li>
+                <li>✅ CSS 懸停效果和過渡動畫</li>
+                <li>✅ 分析完成後自動跳轉回儀表板</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+            <h3>技術實現細節</h3>
+            <div class="button-test">
+                <h4>JavaScript 核心功能：</h4>
+                <pre style="background: #f8f9fa; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 13px;">
+// 1. 檔案上傳功能
+function handleFileSelect(event) - 處理檔案選擇
+• 驗證檔案格式 (.xlsx, .csv, .xls)
+• 驗證檔案大小 (≤50MB)
+• 顯示上傳進度
+• 啟用分析按鈕
+• 新增到上傳紀錄列表
+
+// 2. 拖放功能
+• dragenter/dragover/dragleave/drop 事件處理
+• 視覺回饋（高亮上傳區域）
+• 檔案驗證與處理
+
+// 3. 分析流程
+function handleAnalyze() - 執行數據分析
+• 顯示載入動畫（旋轉圖標）
+• 模擬 3 秒分析過程
+• 顯示成功結果
+• 3 秒後自動跳轉回儀表板
+
+// 4. 上傳紀錄動畫
+• 進度條從 0% 到 100% 動畫
+• 狀態標示更新（等待 → 分析中 → 完成）
+• 顏色變化表示狀態</pre>
+            </div>
+            
+            <div class="button-test">
+                <h4>CSS 增強與互動：</h4>
+                <ul>
+                    <li>上傳區域：虛線邊框 + 懸停效果 + 活動狀態縮放</li>
+                    <li>按鈕狀態：<code>disabled</code> 樣式 → <code>enabled</code> 樣式</li>
+                    <li>進度動畫：進度條填充 + 脈動點動畫</li>
+                    <li>導航懸停：<code>hover:text-tea-deep transition-colors</code></li>
+                    <li>載入狀態：旋轉動畫 <code>animate-spin</code></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+            <h3>測試指令</h3>
+            <p>在瀏覽器中開啟以下頁面進行手動測試：</p>
+            <pre style="background: #f8f9fa; padding: 15px; border-radius: 6px; overflow-x: auto;">
+# 測試完整流程
+file:///C:/Users/User/Desktop/stitch/website/_8/code.html
+
+# 直接測試批次數據導入頁面
+file:///C:/Users/User/Desktop/stitch/website/_3/code.html
+
+# 測試步驟：
+1. 開啟首頁，點擊「批次數據導入」卡片
+2. 應跳轉到批次數據導入頁面
+3. 測試返回按鈕（應返回儀表板）
+4. 再次進入，點擊上傳區域選擇檔案（或拖放檔案）
+5. 觀察上傳進度顯示和按鈕狀態變化
+6. 點擊「確認並執行分析」按鈕
+7. 觀察載入動畫和完成後的自動跳轉
+8. 測試底部導航切換到其他頁面
+9. 測試快速上傳按鈕（底部導航中間）</pre>
+        </div>
+    </div>
+    
+    <script>
+        function demoUpload() {
+            const demoResult = document.getElementById('demoResult');
+            demoResult.style.display = 'block';
+            demoResult.className = 'test-result success';
+            demoResult.textContent = '演示：模擬檔案 "sales_data.xlsx (4.2MB)" 上傳成功，分析按鈕已啟用！';
+            
+            setTimeout(() => {
+                demoResult.className = 'test-result info';
+                demoResult.textContent = '提示：在實際頁面中，您可以點擊上傳區域或拖放檔案進行測試';
+            }, 3000);
+        }
+    </script>
+</body

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>忠茶 客戶資料庫與數據洞察</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5d4037",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1c1816",
+                        "tea-green": "#e8f0e8",
+                        "cream": "#faf7f0",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-[430px] mx-auto bg-white shadow-2xl">
+<!-- Header -->
+<div class="sticky top-0 z-10 flex items-center bg-white/80 backdrop-blur-md px-4 pb-2 pt-6 justify-between border-b border-primary/10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-primary/5 cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h1 class="text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center">忠茶 客戶資料庫</h1>
+<div class="flex w-10 items-center justify-end">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-transparent text-primary hover:bg-primary/5">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto pb-24">
+<!-- Section 1: Core Member Metrics -->
+<div class="px-4 pt-6">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-primary text-xl font-bold tracking-tight">核心成員指標</h2>
+<span class="text-xs font-medium text-primary/60 bg-primary/5 px-2 py-1 rounded-full uppercase tracking-wider">Core Metrics</span>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-2 hide-scrollbar">
+<div class="flex min-w-[160px] flex-1 flex-col gap-2 rounded-xl p-5 bg-cream border border-primary/5">
+<p class="text-primary/70 text-sm font-medium">平均入會月數</p>
+<p class="text-primary text-3xl font-bold leading-tight">19.2</p>
+<div class="flex items-center gap-1 text-emerald-600 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+0.5%</span>
+</div>
+</div>
+<div class="flex min-w-[160px] flex-1 flex-col gap-2 rounded-xl p-5 bg-tea-green border border-primary/5">
+<p class="text-primary/70 text-sm font-medium">平均滿意度</p>
+<p class="text-primary text-3xl font-bold leading-tight">3.63</p>
+<div class="flex items-center gap-1 text-rose-600 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span>-2.1%</span>
+</div>
+</div>
+<div class="flex min-w-[160px] flex-1 flex-col gap-2 rounded-xl p-5 bg-primary/10 border border-primary/5">
+<p class="text-primary/70 text-sm font-medium">總流失率</p>
+<p class="text-primary text-3xl font-bold leading-tight">25.4%</p>
+<div class="flex items-center gap-1 text-rose-600 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span>-1.2%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Segment Deep Dive -->
+<div class="px-4 pt-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-primary text-xl font-bold tracking-tight">分群深度分析</h2>
+<span class="text-xs font-medium text-primary/60 bg-primary/5 px-2 py-1 rounded-full uppercase tracking-wider">Deep Dive</span>
+</div>
+<div class="space-y-4">
+<!-- Long-term Members Card -->
+<div class="bg-white rounded-xl border border-primary/10 p-4 shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">verified_user</span>
+</div>
+<h3 class="font-bold text-primary">長期會員 (&gt;12m)</h3>
+</div>
+<span class="text-lg font-bold text-primary">52.7% <span class="text-xs font-normal text-primary/60">佔比</span></span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-cream rounded-lg p-3 text-center">
+<p class="text-xs text-primary/60 font-medium mb-1">平均滿意度</p>
+<p class="text-xl font-bold text-primary">3.81</p>
+</div>
+<div class="bg-tea-green rounded-lg p-3 text-center">
+<p class="text-xs text-primary/60 font-medium mb-1">流失率</p>
+<p class="text-xl font-bold text-primary">22.8%</p>
+</div>
+</div>
+</div>
+<!-- New Members Card -->
+<div class="bg-white rounded-xl border border-primary/10 p-4 shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-tea-green flex items-center justify-center text-primary border border-primary/10">
+<span class="material-symbols-outlined text-lg">person_add</span>
+</div>
+<h3 class="font-bold text-primary">新進會員 (&lt;3m)</h3>
+</div>
+<span class="text-lg font-bold text-primary">12.1% <span class="text-xs font-normal text-primary/60">佔比</span></span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-cream rounded-lg p-3 text-center">
+<p class="text-xs text-primary/60 font-medium mb-1">平均滿意度</p>
+<p class="text-xl font-bold text-primary">3.42</p>
+</div>
+<div class="bg-rose-50 rounded-lg p-3 text-center">
+<p class="text-xs text-rose-800/60 font-medium mb-1">流失率</p>
+<p class="text-xl font-bold text-rose-800">36.8%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Predictive Model Insights -->
+<div class="px-4 pt-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-primary text-xl font-bold tracking-tight">預測模型洞察</h2>
+<span class="text-xs font-medium text-primary/60 bg-primary/5 px-2 py-1 rounded-full uppercase tracking-wider">AI Insights</span>
+</div>
+<div class="bg-primary/5 rounded-xl p-5 border border-primary/10">
+<div class="flex items-center justify-between mb-6">
+<div>
+<p class="text-primary/70 text-sm font-medium">決策樹深度 (Depth 3)</p>
+<p class="text-primary text-xs">基於行為特徵之流失風險預測</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-primary/60 font-bold uppercase tracking-widest">模型準確率</p>
+<p class="text-2xl font-black text-primary">78.2%</p>
+</div>
+</div>
+<!-- Chart Container -->
+<div class="space-y-4">
+<p class="text-sm font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-base">bar_chart</span>
+                            關鍵特徵重要性 (Feature Importance)
+                        </p>
+<div class="space-y-3">
+<!-- Bar 1 -->
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold text-primary/80">
+<span>最近一次到店 (Last Visit)</span>
+<span>42.7%</span>
+</div>
+<div class="h-2 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 42.7%"></div>
+</div>
+</div>
+<!-- Bar 2 -->
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold text-primary/80">
+<span>顧客滿意度 (Satisfaction)</span>
+<span>28.3%</span>
+</div>
+<div class="h-2 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary/70 rounded-full" style="width: 28.3%"></div>
+</div>
+</div>
+<!-- Bar 3 -->
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold text-primary/80">
+<span>入會月數 (Member Months)</span>
+<span>15.1%</span>
+</div>
+<div class="h-2 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary/50 rounded-full" style="width: 15.1%"></div>
+</div>
+</div>
+<!-- Bar 4 -->
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold text-primary/80">
+<span>其他因素 (Others)</span>
+<span>13.9%</span>
+</div>
+<div class="h-2 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary/30 rounded-full" style="width: 13.9%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Data Info -->
+<div class="px-4 py-8 text-center">
+<p class="text-[10px] text-primary/40 leading-relaxed uppercase tracking-widest font-medium">
+                    Data Source: 2024 Q2 actual analysis results<br/>
+                    Updated periodically for internal use only
+                </p>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] border-t border-primary/10 bg-white/90 backdrop-blur-lg px-4 pb-6 pt-3 flex gap-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary/50" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-[10px] font-bold leading-normal">儀表板</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">group</span>
+<p class="text-[10px] font-bold leading-normal">客戶庫</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary/50" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<p class="text-[10px] font-bold leading-normal">模型</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary/50" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-bold leading-normal">設定</p>
+</a>
+</div>
+</div>
+</body></html>

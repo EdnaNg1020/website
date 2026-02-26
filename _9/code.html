@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>個人與客戶管理中心入口</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5d4037",
+                        "tea-green": "#E8F0E8",
+                        "tea-deep": "#5D4037",
+                        "tea-cream": "#FAF7F0",
+                        // 黑暗模式顏色配置
+                        "dark-bg": "#121612",
+                        "dark-card": "#1E241C",
+                        "dark-text": "#FFFFFF",
+                        "dark-muted": "#A0B096",
+                        "dark-border": "#2D3529",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-tea-cream text-tea-deep font-display min-h-screen dark:bg-dark-bg dark:text-dark-text">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] dark:bg-dark-card shadow-2xl">
+<!-- Header -->
+<div class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 dark:bg-dark-card/90 ios-blur flex items-center justify-between">
+<div class="size-10 rounded-full bg-white dark:bg-dark-card flex items-center justify-center border border-tea-green dark:border-dark-border hover:bg-tea-green/50 dark:hover:bg-dark-border transition-colors" onclick="handleBack()">
+<span class="material-symbols-outlined text-tea-deep dark:text-dark-text">arrow_back_ios_new</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-tea-deep dark:text-dark-text">個人與客戶中心</h1>
+<p class="text-[10px] font-semibold text-tea-deep/50 dark:text-dark-muted uppercase tracking-widest mt-0.5">Personal & Client Center</p>
+</div>
+</div>
+<!-- Profile Section -->
+<div class="px-5 py-4">
+<div class="bg-white dark:bg-dark-card rounded-xl p-6 shadow-sm border border-tea-green/50 dark:border-dark-border flex items-center gap-5">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 border-2 border-tea-green dark:border-dark-border" data-alt="Professional male portrait for manager profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC6VzYKcjiW21rXIyJRgZM-3iouZzETzzOo6kE3z6259Ygf6cRxUnCcZzXmCQ4oXb1fc_xYXfbfsEI5a_0TSlt7Ap85Nlpy1ohFDlLipNe_AOFskJPTC6h4BlIKt7ARtQO6oGvZTN3f_5HL3jSJ7fr9-0SeE8Iu3cl3kxQuALP79HwBcw0CJNuJrGe2Eje3IpxsHRa8CSpu5DsOZl3nUMLjnYInqjAUhOTXXFDkpfaEn0ztJL3FbTpkhkNuUEHxgKp7NozjAjMOAhY");'>
+</div>
+<div class="absolute bottom-0 right-0 bg-tea-deep dark:bg-dark-border text-white p-1 rounded-full border-2 border-white dark:border-dark-card">
+<span class="material-symbols-outlined text-[14px] block">verified</span>
+</div>
+</div>
+<div class="flex flex-col">
+<p class="text-tea-deep dark:text-dark-text text-xl font-bold leading-tight">王小明</p>
+<p class="text-tea-deep/60 dark:text-dark-muted text-sm font-medium mt-1">數據組主管</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-tea-green dark:bg-dark-border text-tea-deep dark:text-dark-text text-[10px] font-bold tracking-wider uppercase">
+                        TC-8821
+                    </div>
+</div>
+</div>
+</div>
+<!-- Management Grid Title -->
+<div class="px-5 pb-2 pt-2">
+<h3 class="text-tea-deep/70 dark:text-dark-muted text-sm font-bold uppercase tracking-widest">管理功能中心</h3>
+</div>
+<!-- Navigation Grid -->
+<div class="grid grid-cols-1 gap-4 px-5 pt-2">
+<!-- Customer Database -->
+<div class="bg-white dark:bg-dark-card flex flex-row items-center gap-4 rounded-xl p-5 shadow-sm border border-tea-green/50 dark:border-dark-border active:scale-95 transition-transform cursor-pointer group" onclick="openCustomerDatabase()">
+<div class="flex size-14 shrink-0 items-center justify-center rounded-lg bg-tea-green dark:bg-dark-border text-tea-deep dark:text-dark-text group-hover:bg-tea-deep dark:group-hover:bg-dark-text group-hover:text-white dark:group-hover:text-dark-bg transition-colors">
+<span class="material-symbols-outlined text-3xl">database</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-tea-deep dark:text-dark-text text-base font-bold leading-tight">客戶資料庫</p>
+<p class="text-tea-deep/60 dark:text-dark-muted text-xs mt-1">管理個別會員詳細檔案與歷程</p>
+</div>
+<span class="material-symbols-outlined text-tea-green/50 dark:text-dark-muted">chevron_right</span>
+</div>
+<!-- Segment Management -->
+<div class="bg-white dark:bg-dark-card flex flex-row items-center gap-4 rounded-xl p-5 shadow-sm border border-tea-green/50 dark:border-dark-border active:scale-95 transition-transform cursor-pointer group" onclick="openSegmentManagement()">
+<div class="flex size-14 shrink-0 items-center justify-center rounded-lg bg-tea-green dark:bg-dark-border text-tea-deep dark:text-dark-text group-hover:bg-tea-deep dark:group-hover:bg-dark-text group-hover:text-white dark:group-hover:text-dark-bg transition-colors">
+<span class="material-symbols-outlined text-3xl">group_work</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-tea-deep dark:text-dark-text text-base font-bold leading-tight">分群管理</p>
+<p class="text-tea-deep/60 dark:text-dark-muted text-xs mt-1">自動化客群分類：新客與長青客</p>
+</div>
+<span class="material-symbols-outlined text-tea-green/50 dark:text-dark-muted">chevron_right</span>
+</div>
+<!-- Marketing Permissions -->
+<div class="bg-white dark:bg-dark-card flex flex-row items-center gap-4 rounded-xl p-5 shadow-sm border border-tea-green/50 dark:border-dark-border active:scale-95 transition-transform cursor-pointer group" onclick="openMarketingPermissions()">
+<div class="flex size-14 shrink-0 items-center justify-center rounded-lg bg-tea-green dark:bg-dark-border text-tea-deep dark:text-dark-text group-hover:bg-tea-deep dark:group-hover:bg-dark-text group-hover:text-white dark:group-hover:text-dark-bg transition-colors">
+<span class="material-symbols-outlined text-3xl">shield_person</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-tea-deep dark:text-dark-text text-base font-bold leading-tight">行銷權限</p>
+<p class="text-tea-deep/60 dark:text-dark-muted text-xs mt-1">設定員工存取等級與操作權限</p>
+</div>
+<span class="material-symbols-outlined text-tea-green/50 dark:text-dark-muted">chevron_right</span>
+</div>
+<!-- Personal Settings -->
+<div class="bg-white dark:bg-dark-card flex flex-row items-center gap-4 rounded-xl p-5 shadow-sm border border-tea-green/50 dark:border-dark-border active:scale-95 transition-transform cursor-pointer group" onclick="openPersonalSettings()">
+<div class="flex size-14 shrink-0 items-center justify-center rounded-lg bg-tea-green dark:bg-dark-border text-tea-deep dark:text-dark-text group-hover:bg-tea-deep dark:group-hover:bg-dark-text group-hover:text-white dark:group-hover:text-dark-bg transition-colors">
+<span class="material-symbols-outlined text-3xl">settings_account_box</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-tea-deep dark:text-dark-text text-base font-bold leading-tight">個人設定</p>
+<p class="text-tea-deep/60 dark:text-dark-muted text-xs mt-1">偏好設定與 Google 帳號管理</p>
+</div>
+<span class="material-symbols-outlined text-tea-green/50 dark:text-dark-muted">chevron_right</span>
+</div>
+</div>
+<!-- Spacer for Bottom Nav -->
+<div class="h-24"></div>
+<!-- Bottom NavBar -->
+<div class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 dark:bg-dark-card/90 ios-blur border-t border-tea-green dark:border-dark-border px-8 pb-8 pt-3 z-[60]">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_8/code.html">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">數據分析</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_2/code.html">
+<span class="material-symbols-outlined">group</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">會員管理</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_1/code.html">
+<span class="material-symbols-outlined">target</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">精準行銷</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-tea-deep dark:text-dark-text hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="#">
+<div class="relative">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<div class="absolute -top-1 -right-1 size-2 bg-red-500 rounded-full border border-white dark:border-dark-card"></div>
+</div>
+<p class="text-xs font-bold leading-normal tracking-[0.015em]">個人中心</p>
+</a>
+</div>
+</div>
+</div>
+<script>
+  // Handle back button
+  function handleBack() {
+    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+      history.back();
+    } else {
+      window.location.href = '../_8/code.html';
+    }
+  }
+
+  // Function card actions
+  function openCustomerDatabase() {
+    alert('開啟客戶資料庫功能');
+    // 實際應用中這裡會導航到客戶資料庫頁面
+    // window.location.href = 'customer_database.html';
+  }
+
+  function openSegmentManagement() {
+    alert('開啟分群管理功能');
+    // 實際應用中這裡會導航到分群管理頁面
+    // window.location.href = 'segment_management.html';
+  }
+
+  function openMarketingPermissions() {
+    alert('開啟行銷權限功能');
+    // 實際應用中這裡會導航到行銷權限頁面
+    // window.location.href = 'marketing_permissions.html';
+  }
+
+  function openPersonalSettings() {
+    alert('開啟個人設定功能');
+    // 實際應用中這裡會導航到個人設定頁面
+    // window.location.href = 'personal_settings.html';
+  }
+
+  // Dark mode functions
+  function initializeDarkMode() {
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const html = document.documentElement;
+    
+    if (savedMode === 'true' || (savedMode === null && prefersDark)) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+  }
+
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    const isDark = html.classList.contains('dark');
+    
+    if (isDark) {
+      html.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
+    }
+  }
+
+  // Initialize dark mode on page load
+  document.addEventListener('DOMContentLoaded', initializeDarkMode);
+
+  // Add click effects to function cards
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('[onclick^="open"]');
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        // Add ripple effect
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(93, 64, 55, 0.3);
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          width: ${size}px;
+          height: ${size}px;
+          top: ${y}px;
+          left: ${x}px;
+          pointer-events: none;
+        `;
+        
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+  });
+
+  // Add CSS for ripple effect
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+</body></html>

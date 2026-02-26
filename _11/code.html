@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5d4037",
+                        "tea-green": "#e8f0e8",
+                        "background-light": "#faf7f0",
+                        "background-dark": "#1c1816",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>匯出數據報告預覽</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+<!-- Header Section (TopAppBar) -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center">匯出數據報告</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="text-primary">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</button>
+</div>
+</div>
+<!-- File Info Section -->
+<div class="flex items-center gap-4 bg-tea-green/50 dark:bg-primary/10 px-4 min-h-[80px] py-3 m-4 rounded-xl border border-primary/5">
+<div class="text-primary flex items-center justify-center rounded-lg bg-white dark:bg-slate-800 shrink-0 size-12 shadow-sm">
+<span class="material-symbols-outlined text-3xl">description</span>
+</div>
+<div class="flex flex-col justify-center overflow-hidden">
+<p class="text-primary text-base font-semibold leading-normal truncate">2024_Q2_Member_Insight_Report.pdf</p>
+<p class="text-primary/70 text-sm font-normal leading-normal">1.2 MB • 忠茶 客戶數據洞察</p>
+</div>
+</div>
+<!-- Report Preview Section -->
+<div class="px-4">
+<div class="flex justify-between items-end mb-3">
+<h3 class="text-primary text-lg font-bold leading-tight tracking-tight">報告預覽</h3>
+<span class="text-xs text-primary/60 font-medium">共 12 頁</span>
+</div>
+<!-- Scrolling Preview Container -->
+<div class="relative w-full rounded-xl overflow-hidden border border-primary/10 bg-white dark:bg-slate-900 shadow-sm p-4 space-y-6">
+<!-- Mini Card 1: Data Insights -->
+<div class="p-3 rounded-lg bg-tea-green/30 border border-tea-green border-dashed">
+<p class="text-[10px] font-bold text-primary/50 uppercase tracking-widest mb-2">PAGE 1: OVERVIEW</p>
+<div class="h-24 w-full bg-cover bg-center rounded-lg mb-2 shadow-inner" data-alt="Abstract data visualization with green accents" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKe6EVsd24v9RV6-rJnEc_vWv4yfhfAJoQA-eilZLbM0pdbZDjinVAJkwP66zGuD-PrUt8NajN_1_O20ov_46_vGogjk3X8xGXwSDMpksjRHYMhoUJAELxCUFa80UYsT_AsQBK8nZmSX_mvqZLDUI_UDTlRBP7X96W7gwfcoRprN0ALlVcaK3TkqUYmo5VKHqc3koO_LeByh41gIfnSpRs_avjMNDSFYADtShgUuNydcXjfCZpWK-I6SpuzAxR8qRxt4_b7ggrpsI");'></div>
+<div class="h-3 w-3/4 bg-primary/20 rounded-full mb-1"></div>
+<div class="h-2 w-1/2 bg-primary/10 rounded-full"></div>
+</div>
+<!-- Mini Card 2: Feature Importance (Chart) -->
+<div class="p-3 rounded-lg bg-white dark:bg-slate-800 border border-primary/5 shadow-sm">
+<p class="text-[10px] font-bold text-primary/50 uppercase tracking-widest mb-3">PAGE 2: MODEL PREDICTIONS</p>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-primary/60 w-12 truncate">Recency</span>
+<div class="flex-1 h-3 bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 90%;"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-primary/60 w-12 truncate">Frequency</span>
+<div class="flex-1 h-3 bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 70%;"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-primary/60 w-12 truncate">Monetary</span>
+<div class="flex-1 h-3 bg-tea-green rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mini Card 3: Segments -->
+<div class="grid grid-cols-2 gap-2">
+<div class="p-2 rounded-lg bg-background-light border border-primary/5 flex flex-col items-center">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-primary text-sm">group</span>
+</div>
+<div class="h-2 w-full bg-primary/20 rounded-full mb-1"></div>
+<div class="h-1.5 w-2/3 bg-primary/10 rounded-full"></div>
+</div>
+<div class="p-2 rounded-lg bg-background-light border border-primary/5 flex flex-col items-center">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+</div>
+<div class="h-2 w-full bg-primary/20 rounded-full mb-1"></div>
+<div class="h-1.5 w-2/3 bg-primary/10 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Expand Button Overlay style -->
+<div class="flex justify-center -mt-4 relative z-10">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium shadow-lg">
+<span class="material-symbols-outlined text-sm">zoom_in</span>
+                    查看完整預覽
+                </button>
+</div>
+</div>
+<!-- Export Options Section -->
+<div class="px-6 py-8">
+<h3 class="text-primary text-lg font-bold leading-tight tracking-tight mb-4">匯出選項設定</h3>
+<div class="space-y-4">
+<label class="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-900 border border-primary/10 cursor-pointer shadow-sm">
+<div class="flex items-center gap-3">
+<div class="text-primary bg-tea-green p-2 rounded-lg">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div>
+<p class="font-semibold text-primary">原始數據摘要</p>
+<p class="text-xs text-primary/60">包含交易量、客單價等基礎統計</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 rounded border-primary/20 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-900 border border-primary/10 cursor-pointer shadow-sm">
+<div class="flex items-center gap-3">
+<div class="text-primary bg-tea-green p-2 rounded-lg">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div>
+<p class="font-semibold text-primary">模型詳細資訊</p>
+<p class="text-xs text-primary/60">RFM 分權重、流失預測特徵評分</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 rounded border-primary/20 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-900 border border-primary/10 cursor-pointer shadow-sm">
+<div class="flex items-center gap-3">
+<div class="text-primary bg-tea-green p-2 rounded-lg">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div>
+<p class="font-semibold text-primary">營銷行動建議</p>
+<p class="text-xs text-primary/60">針對不同客群的個人化溝通策略</p>
+</div>
+</div>
+<input class="w-5 h-5 rounded border-primary/20 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Action Buttons Section -->
+<div class="mt-auto p-6 bg-white dark:bg-slate-900 border-t border-primary/10 space-y-3">
+<button class="w-full flex items-center justify-center gap-2 py-4 bg-primary text-background-light rounded-xl font-bold text-lg shadow-xl shadow-primary/20 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">download</span>
+                下載 PDF 報告
+            </button>
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-tea-green text-primary rounded-xl font-semibold border border-primary/10 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">mail</span>
+                發送到電子郵件
+            </button>
+<div class="pt-2 text-center">
+<p class="text-[10px] text-primary/40 uppercase tracking-widest font-bold">Internal Use Only • 忠茶 數據機密</p>
+</div>
+</div>
+<div class="h-6 bg-white dark:bg-slate-900"></div>
+</div>
+</body></html>

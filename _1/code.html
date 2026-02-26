@@ -13,12 +13,20 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#13ec13",
+                        "primary": "#4CAF50",
                         "background-light": "#FAF7F0",
-                        "background-dark": "#102210",
+                        "background-dark": "#121612",  // 更新為更深的背景
                         "tea-green": "#E8F0E8",
-                        "deep-brown": "#5D4037",
-                        "tea-accent": "#4c9a4c"
+                        "tea-deep": "#5D4037",
+                        "tea-cream": "#FAF7F0",
+                        "tea-accent": "#5D4037",
+                        // 統一的黑暗模式顏色 - 提高對比度
+                        "dark-bg": "#121612",      // 更深的背景，提高對比度
+                        "dark-card": "#1E241C",    // 更深的卡片
+                        "dark-text": "#FFFFFF",    // 純白色文字，最高對比度
+                        "dark-border": "#2D3529",  // 深茶色邊框
+                        "dark-muted": "#A0B096",   // 更亮的次要文字
+                        "dark-accent": "#4CAF50",  // 主要顏色在黑暗模式下的變體
                     },
                     fontFamily: {
                         "display": ["Work Sans", "Noto Sans TC", "sans-serif"]
@@ -27,7 +35,8 @@
                         "DEFAULT": "0.5rem",
                         "lg": "1rem",
                         "xl": "1.5rem",
-                        "full": "9999px"
+                        "full": "9999px",
+                        "tea": "16px"
                     },
                 },
             },
@@ -94,8 +103,8 @@
           width: 20px;
           height: 20px;
           margin: -10px 0 0 -10px;
-          border: 2px solid rgba(19, 236, 19, 0.3);
-          border-top-color: #13ec13;
+          border: 2px solid rgba(76, 175, 80, 0.3);
+          border-top-color: #4CAF50;
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
       }
@@ -106,37 +115,40 @@
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
-<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<body class="bg-tea-cream text-tea-deep font-display min-h-screen dark:bg-dark-bg dark:text-dark-text">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden max-w-[430px] mx-auto bg-[#FDFCF9] dark:bg-dark-card shadow-2xl">
 <!-- Header -->
-<div class="flex items-center bg-background-light dark:bg-background-dark p-4 sticky top-0 z-10 border-b border-tea-green/30">
-<a href="../_8/code.html" class="text-deep-brown dark:text-tea-green flex size-12 shrink-0 items-center">
-<span class="material-symbols-outlined text-2xl">arrow_back</span>
-</a>
-<h2 class="text-deep-brown dark:text-tea-green text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">精準行銷</h2>
-<div class="flex w-12 items-center justify-end">
-<button onclick="openSearch()" class="flex items-center justify-center rounded-xl h-12 w-12 bg-transparent text-deep-brown dark:text-tea-green">
-<span class="material-symbols-outlined text-2xl">search</span>
+<header class="px-5 pt-8 pb-4 sticky top-0 z-50 bg-[#FDFCF9]/80 dark:bg-dark-card/90 ios-blur flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="size-10 rounded-full bg-white dark:bg-dark-card flex items-center justify-center border border-tea-green dark:border-dark-border hover:bg-tea-green/50 dark:hover:bg-dark-border transition-colors" onclick="handleBack()">
+<span class="material-symbols-outlined text-tea-deep dark:text-dark-text">arrow_back_ios_new</span>
 </button>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-tea-deep dark:text-dark-text">精準行銷</h1>
+<p class="text-[10px] font-semibold text-tea-deep/50 dark:text-dark-muted uppercase tracking-widest mt-0.5">Precision Marketing</p>
 </div>
 </div>
-<main class="flex-1 pb-24">
+<button class="size-10 rounded-full bg-white dark:bg-dark-card flex items-center justify-center border border-tea-green dark:border-dark-border hover:bg-tea-green/50 dark:hover:bg-dark-border transition-colors" onclick="openSearch()">
+<span class="material-symbols-outlined text-[22px] text-tea-deep dark:text-dark-text">search</span>
+</button>
+</header>
+<main class="flex-1 px-5 pb-32 space-y-8">
 <!-- Smart Recommendations Section -->
-<div class="px-4 py-6">
+<section>
 <div class="flex items-center justify-between mb-4">
-<h2 class="text-deep-brown dark:text-tea-green text-xl font-bold tracking-tight">智慧推薦方案</h2>
-<span class="text-tea-accent text-sm font-medium">查看全部</span>
+  <h2 class="text-tea-deep dark:text-dark-text text-xl font-bold tracking-tight">智慧推薦方案</h2>
+  <span class="text-tea-deep/60 dark:text-dark-muted text-sm font-medium">查看全部</span>
 </div>
 <div class="flex overflow-x-auto gap-4 hide-scrollbar py-2">
 <!-- Card 1 -->
 <div class="flex h-full flex-col gap-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm min-w-[280px] p-4 border border-tea-green/50">
 <div class="w-full h-32 bg-tea-green/30 rounded-lg flex items-center justify-center relative overflow-hidden" data-alt="Abstract green tea leaf patterns background">
-<span class="material-symbols-outlined text-tea-accent text-4xl">trending_down</span>
+  <span class="material-symbols-outlined text-tea-deep text-4xl">trending_down</span>
 </div>
 <div class="flex flex-col flex-1 justify-between gap-4">
 <div>
 <h3 class="text-deep-brown dark:text-tea-green text-lg font-bold">高流失風險挽回</h3>
-<p class="text-tea-accent text-sm font-medium mt-1">目標對象：42 位成員</p>
+<p class="text-tea-deep text-sm font-medium mt-1">目標對象：42 位成員</p>
 <p class="text-slate-500 dark:text-slate-400 text-xs mt-2 italic">預測 30 天內流失機率 &gt; 75%</p>
 </div>
 <button class="w-full flex cursor-pointer items-center justify-center rounded-xl h-11 px-4 bg-primary text-deep-brown text-sm font-bold tracking-wide shadow-sm hover:opacity-90 transition-opacity recommendation-card">
@@ -147,12 +159,12 @@
 <!-- Card 2 -->
 <div class="flex h-full flex-col gap-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm min-w-[280px] p-4 border border-tea-green/50">
 <div class="w-full h-32 bg-tea-green/30 rounded-lg flex items-center justify-center relative overflow-hidden" data-alt="Minimalist soft green tea steam illustration">
-<span class="material-symbols-outlined text-tea-accent text-4xl">person_add</span>
+  <span class="material-symbols-outlined text-tea-deep text-4xl">person_add</span>
 </div>
 <div class="flex flex-col flex-1 justify-between gap-4">
 <div>
 <h3 class="text-deep-brown dark:text-tea-green text-lg font-bold">新會員黏著度提升</h3>
-<p class="text-tea-accent text-sm font-medium mt-1">目標對象：18 位成員</p>
+<p class="text-tea-deep text-sm font-medium mt-1">目標對象：18 位成員</p>
 <p class="text-slate-500 dark:text-slate-400 text-xs mt-2 italic">註冊未滿 14 天且未二次消費</p>
 </div>
 <button class="w-full flex cursor-pointer items-center justify-center rounded-xl h-11 px-4 bg-primary text-deep-brown text-sm font-bold tracking-wide shadow-sm hover:opacity-90 transition-opacity recommendation-card">
@@ -163,12 +175,12 @@
 <!-- Card 3 -->
 <div class="flex h-full flex-col gap-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm min-w-[280px] p-4 border border-tea-green/50">
 <div class="w-full h-32 bg-tea-green/30 rounded-lg flex items-center justify-center relative overflow-hidden" data-alt="Golden tea cup silhouette for VIP members">
-<span class="material-symbols-outlined text-tea-accent text-4xl">verified_user</span>
+  <span class="material-symbols-outlined text-tea-deep text-4xl">verified_user</span>
 </div>
 <div class="flex flex-col flex-1 justify-between gap-4">
 <div>
 <h3 class="text-deep-brown dark:text-tea-green text-lg font-bold">長期會員回饋</h3>
-<p class="text-tea-accent text-sm font-medium mt-1">目標對象：125 位成員</p>
+<p class="text-tea-deep text-sm font-medium mt-1">目標對象：125 位成員</p>
 <p class="text-slate-500 dark:text-slate-400 text-xs mt-2 italic">年度累積消費前 10% 忠誠客</p>
 </div>
 <button class="w-full flex cursor-pointer items-center justify-center rounded-xl h-11 px-4 bg-primary text-deep-brown text-sm font-bold tracking-wide shadow-sm hover:opacity-90 transition-opacity recommendation-card">
@@ -189,11 +201,11 @@
 <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-tea-green/50 shadow-sm">
 <div class="flex justify-between items-start mb-3">
 <div>
-<span class="inline-block px-2 py-1 rounded bg-tea-green text-tea-accent text-[10px] font-bold uppercase mb-1">High Value</span>
+<span class="inline-block px-2 py-1 rounded bg-tea-green text-tea-deep text-[10px] font-bold uppercase mb-1">High Value</span>
 <h4 class="text-deep-brown dark:text-tea-green font-bold">品茗愛好者</h4>
 </div>
 <div class="text-right">
-<div class="text-tea-accent font-bold">88%</div>
+<div class="text-tea-deep font-bold">88%</div>
 <div class="text-[10px] text-slate-400">預測轉化率</div>
 </div>
 </div>
@@ -219,7 +231,7 @@
 <h4 class="text-deep-brown dark:text-tea-green font-bold">週末午茶族</h4>
 </div>
 <div class="text-right">
-<div class="text-tea-accent font-bold">62%</div>
+<div class="text-tea-deep font-bold">62%</div>
 <div class="text-[10px] text-slate-400">預測轉化率</div>
 </div>
 </div>
@@ -268,19 +280,19 @@
 </main>
 <!-- Bottom Navigation Bar -->
 <div class="fixed bottom-0 left-0 right-0 flex border-t border-tea-green bg-background-light dark:bg-background-dark px-4 pb-6 pt-2 z-20">
-  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-accent/60 hover:text-tea-accent transition-colors" href="../_8/code.html">
+  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_8/code.html">
     <span class="material-symbols-outlined">bar_chart</span>
     <p class="text-xs font-medium leading-normal tracking-[0.015em]">數據分析</p>
   </a>
-  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-deep-brown dark:text-tea-green" href="#">
-    <span class="material-symbols-outlined text-tea-accent" style="font-variation-settings: 'FILL' 1;">target</span>
+  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-deep dark:text-dark-text" href="#">
+    <span class="material-symbols-outlined text-tea-deep" style="font-variation-settings: 'FILL' 1;">target</span>
     <p class="text-xs font-bold leading-normal tracking-[0.015em]">精準行銷</p>
   </a>
-  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-accent/60 hover:text-tea-accent transition-colors" href="../_2/code.html">
+  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_2/code.html">
     <span class="material-symbols-outlined">group</span>
     <p class="text-xs font-medium leading-normal tracking-[0.015em]">會員管理</p>
   </a>
-  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-accent/60 hover:text-tea-accent transition-colors" href="../_3/code.html">
+  <a class="flex flex-1 flex-col items-center justify-end gap-1 text-tea-deep/40 dark:text-dark-muted hover:text-tea-deep dark:hover:text-dark-text transition-colors" href="../_3/code.html">
     <span class="material-symbols-outlined">settings</span>
     <p class="text-xs font-medium leading-normal tracking-[0.015em]">設定</p>
   </a>
@@ -292,7 +304,7 @@
     <div class="flex items-center gap-3 mb-4">
       <div class="flex-1 relative">
         <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-deep-brown dark:text-tea-green">search</span>
-        <input type="text" id="searchInput" placeholder="搜尋會員、標籤或方案..." class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-tea-green/50 rounded-xl text-deep-brown dark:text-tea-green placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-tea-accent">
+        <input type="text" id="searchInput" placeholder="搜尋會員、標籤或方案..." class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-tea-green/50 rounded-xl text-deep-brown dark:text-tea-green placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-tea-deep">
       </div>
       <button onclick="closeSearch()" class="text-deep-brown dark:text-tea-green font-medium px-4 py-2">取消</button>
     </div>
@@ -303,7 +315,7 @@
             <h4 class="text-deep-brown dark:text-tea-green font-bold">王小明</h4>
             <p class="text-slate-500 dark:text-slate-400 text-sm">VIP 會員 · 最近購買：2024/03/15</p>
           </div>
-          <span class="material-symbols-outlined text-tea-accent">chevron_right</span>
+          <span class="material-symbols-outlined text-tea-deep">chevron_right</span>
         </div>
       </div>
       <div class="search-result-item p-3 bg-white dark:bg-slate-800 rounded-xl border border-tea-green/30 hover:bg-tea-green/20 cursor-pointer">
@@ -312,7 +324,7 @@
             <h4 class="text-deep-brown dark:text-tea-green font-bold">高流失風險挽回方案</h4>
             <p class="text-slate-500 dark:text-slate-400 text-sm">目標對象：42 位成員 · 優惠券：85折</p>
           </div>
-          <span class="material-symbols-outlined text-tea-accent">chevron_right</span>
+          <span class="material-symbols-outlined text-tea-deep">chevron_right</span>
         </div>
       </div>
       <div class="search-result-item p-3 bg-white dark:bg-slate-800 rounded-xl border border-tea-green/30 hover:bg-tea-green/20 cursor-pointer">
@@ -321,7 +333,7 @@
             <h4 class="text-deep-brown dark:text-tea-green font-bold">#新會員</h4>
             <p class="text-slate-500 dark:text-slate-400 text-sm">標籤 · 18 位成員</p>
           </div>
-          <span class="material-symbols-outlined text-tea-accent">chevron_right</span>
+          <span class="material-symbols-outlined text-tea-deep">chevron_right</span>
         </div>
       </div>
     </div>
@@ -341,6 +353,31 @@
   function closeSearch() {
     const modal = document.getElementById('searchModal');
     modal.classList.add('hidden');
+  }
+
+  // Dark mode initialization
+  function initializeDarkMode() {
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const html = document.documentElement;
+    
+    if (savedMode === 'true' || (savedMode === null && prefersDark)) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+  }
+
+  // Initialize dark mode on page load
+  document.addEventListener('DOMContentLoaded', initializeDarkMode);
+
+  // Handle back button
+  function handleBack() {
+    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+      history.back();
+    } else {
+      window.location.href = '../_8/code.html';
+    }
   }
 
   // Handle search input
