@@ -3,9 +3,9 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -167,7 +167,7 @@ function handleLogin() {
     // 模擬 API 呼叫延遲（800ms 後重定向）
     setTimeout(() => {
         // 重定向到主頁面（儀表板）
-        window.location.href = '../_8/code.html';
+        window.location.href = '_8/code.html';
     }, 800);
 }
 
@@ -192,7 +192,7 @@ function handleGoogleLogin() {
     setTimeout(() => {
         showNotification('Google 登入成功！正在導向儀表板...', 'success');
         setTimeout(() => {
-            window.location.href = '../_8/code.html';
+            window.location.href = '_8/code.html';
         }, 500);
     }, 1500);
 }

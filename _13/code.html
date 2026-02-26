@@ -43,7 +43,7 @@
 <div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark overflow-hidden">
 <!-- Top Navigation Bar -->
 <div class="sticky top-0 z-20 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 border-b border-primary/10">
-<div class="text-primary dark:text-primary flex size-10 items-center justify-center rounded-full hover:bg-primary/10 cursor-pointer">
+<div class="text-primary dark:text-primary flex size-10 items-center justify-center rounded-full hover:bg-primary/10 cursor-pointer" onclick="goBack()">
 <span class="material-symbols-outlined">arrow_back</span>
 </div>
 <h1 class="text-primary text-xl font-bold leading-tight tracking-tight flex-1 ml-2">行銷權限管理</h1>
@@ -193,4 +193,197 @@
 <span class="material-symbols-outlined text-2xl">person_add</span>
 </button>
 </div>
+
+<script>
+  // 返回功能
+  function goBack() {
+    try {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        window.location.href = '../_9/code.html';
+      }
+    } catch (error) {
+      window.location.href = '../_9/code.html';
+    }
+  }
+  
+  // 顯示通知
+  function showNotification(message) {
+    // 創建通知元素
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-primary text-white px-4 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+    notification.textContent = message;
+    notification.style.cssText = `
+      animation: fadeIn 0.3s ease-in-out;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // 3秒後移除通知
+    setTimeout(() => {
+      notification.style.animation = 'fadeOut 0.3s ease-in-out';
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 3000);
+  }
+  
+  // 切換開關功能
+  function setupToggleSwitches() {
+    const toggles = document.querySelectorAll('input[type="checkbox"]');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('change', function() {
+        const permissionText = this.closest('.flex.items-center.justify-between').querySelector('span').textContent;
+        const status = this.checked ? '啟用' : '停用';
+        showNotification(`${permissionText} 權限已${status}`);
+      });
+    });
+  }
+  
+  // 工作人員卡片展開/收起功能
+  function setupStaffCards() {
+    const cards = document.querySelectorAll('.bg-white.dark\\:bg-stone-900.rounded-xl');
+    
+    cards.forEach(card => {
+      const expandBtn = card.querySelector('.material-symbols-outlined');
+      if (expandBtn && expandBtn.textContent.includes('expand_more')) {
+        // 為展開按鈕添加點擊事件
+        expandBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleCardExpansion(card, this);
+        });
+        
+        // 為整個卡片添加點擊事件（排除按鈕和開關）
+        card.addEventListener('click', function(e) {
+          if (!e.target.closest('.material-symbols-outlined') &&
+              !e.target.closest('input[type="checkbox"]') &&
+              !e.target.closest('button')) {
+            const btn = this.querySelector('.material-symbols-outlined');
+            if (btn) {
+              toggleCardExpansion(this, btn);
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  function toggleCardExpansion(card, button) {
+    const permissionSection = card.querySelector('.space-y-3.pt-3.border-t');
+    
+    if (permissionSection) {
+      if (permissionSection.style.display === 'none' || !permissionSection.style.display) {
+        permissionSection.style.display = 'block';
+        button.textContent = 'expand_less';
+        card.classList.add('ring-2', 'ring-primary');
+      } else {
+        permissionSection.style.display = 'none';
+        button.textContent = 'expand_more';
+        card.classList.remove('ring-2', 'ring-primary');
+      }
+    }
+  }
+  
+  // 搜索功能
+  function setupSearch() {
+    const searchInput = document.querySelector('input[placeholder*="搜尋"]');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const cards = document.querySelectorAll('.bg-white.dark\\:bg-stone-900.rounded-xl');
+        let visibleCount = 0;
+        
+        cards.forEach(card => {
+          const staffName = card.querySelector('p.text-slate-900')?.textContent?.toLowerCase() || '';
+          const staffPosition = card.querySelector('p.text-primary\\/70')?.textContent?.toLowerCase() || '';
+          const staffRole = card.querySelector('span.bg-primary, span.bg-tea-green')?.textContent?.toLowerCase() || '';
+          
+          if (staffName.includes(searchTerm) || staffPosition.includes(searchTerm) || staffRole.includes(searchTerm) || searchTerm === '') {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // 更新計數
+        const countSpan = document.querySelector('span.bg-primary\\/10');
+        if (countSpan) {
+          countSpan.textContent = `共 ${visibleCount} 位`;
+        }
+      });
+    }
+  }
+  
+  // 添加人員按鈕功能
+  function setupAddStaffButton() {
+    const addButton = document.querySelector('button.fixed.right-6.bottom-24');
+    if (addButton) {
+      addButton.addEventListener('click', function() {
+        const newStaffName = prompt('請輸入新工作人員姓名：', '新員工');
+        const newStaffPosition = prompt('請輸入職位：', '實習生');
+        
+        if (newStaffName && newStaffPosition) {
+          showNotification(`已添加新工作人員：${newStaffName} (${newStaffPosition})`);
+          
+          // 在實際應用中，這裡會發送API請求並更新UI
+          // 這裡我們只顯示通知，不實際添加卡片
+        }
+      });
+    }
+  }
+  
+  // 更多選項按鈕功能
+  function setupMoreOptions() {
+    const moreOptionsBtn = document.querySelector('.material-symbols-outlined:contains("more_vert")');
+    if (moreOptionsBtn) {
+      moreOptionsBtn.closest('div').addEventListener('click', function() {
+        const options = [
+          '匯出權限報告',
+          '批量修改權限',
+          '查看操作日誌',
+          '重置所有權限'
+        ];
+        
+        const selected = prompt(`請選擇操作：\n\n${options.map((opt, i) => `${i+1}. ${opt}`).join('\n')}\n\n輸入數字選擇：`, '1');
+        
+        if (selected) {
+          const index = parseInt(selected) - 1;
+          if (index >= 0 && index < options.length) {
+            showNotification(`已選擇：${options[index]}`);
+          }
+        }
+      });
+    }
+  }
+  
+  // 頁面加載時初始化
+  document.addEventListener('DOMContentLoaded', function() {
+    setupToggleSwitches();
+    setupStaffCards();
+    setupSearch();
+    setupAddStaffButton();
+    setupMoreOptions();
+    
+    // 添加動畫樣式
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-10px); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    console.log('行銷權限管理頁面已初始化');
+  });
+</script>
 </body></html>

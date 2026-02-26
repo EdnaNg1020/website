@@ -42,12 +42,12 @@
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
 <!-- Header Section (TopAppBar) -->
 <div class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/10">
-<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer" onclick="goBack()">
 <span class="material-symbols-outlined">arrow_back_ios</span>
 </div>
 <h2 class="text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center">匯出數據報告</h2>
 <div class="flex w-10 items-center justify-end">
-<button class="text-primary">
+<button class="text-primary" onclick="showReportInfo()">
 <span class="material-symbols-outlined">picture_as_pdf</span>
 </button>
 </div>
@@ -121,7 +121,7 @@
 </div>
 <!-- Expand Button Overlay style -->
 <div class="flex justify-center -mt-4 relative z-10">
-<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium shadow-lg">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium shadow-lg" onclick="showFullPreview()">
 <span class="material-symbols-outlined text-sm">zoom_in</span>
                     查看完整預覽
                 </button>
@@ -185,4 +185,191 @@
 </div>
 <div class="h-6 bg-white dark:bg-slate-900"></div>
 </div>
+<script>
+  // 返回功能
+  function goBack() {
+    // 嘗試返回上一頁，如果失敗則導航到客戶資料庫頁面
+    try {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        window.location.href = '../_10/code.html';
+      }
+    } catch (error) {
+      console.log('返回失敗，導航到客戶資料庫頁面');
+      window.location.href = '../_10/code.html';
+    }
+  }
+  
+  // PDF下載功能
+  function downloadPDFReport() {
+    // 顯示下載進度
+    const downloadBtn = document.querySelector('button:contains("下載 PDF 報告")');
+    if (downloadBtn) {
+      downloadBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> 生成中...';
+      downloadBtn.disabled = true;
+    }
+    
+    // 模擬PDF生成過程
+    setTimeout(() => {
+      // 創建模擬的PDF下載
+      const fileName = '忠茶_客戶數據洞察報告_' + new Date().toISOString().slice(0,10) + '.pdf';
+      const fileSize = '1.2 MB';
+      
+      // 顯示成功訊息
+      alert(`PDF報告已成功生成！\n\n檔案名稱：${fileName}\n檔案大小：${fileSize}\n\n報告已保存至系統並開始下載。`);
+      
+      // 恢復按鈕狀態
+      if (downloadBtn) {
+        downloadBtn.innerHTML = '<span class="material-symbols-outlined">download</span> 下載 PDF 報告';
+        downloadBtn.disabled = false;
+      }
+      
+      // 模擬文件下載（在實際應用中，這裡會是真正的文件下載）
+      // 這裡我們創建一個虛擬的Blob並觸發下載
+      const blob = new Blob(['忠茶客戶數據洞察報告 - 此為演示文件，實際應用中會包含完整的數據報告內容。'], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+    }, 2000); // 2秒模擬生成時間
+  }
+  
+  // 電子郵件發送功能
+  function sendEmailReport() {
+    const email = prompt('請輸入接收報告的電子郵件地址：', 'user@example.com');
+    if (email) {
+      alert(`報告已發送到：${email}\n\n您將在幾分鐘內收到包含報告下載連結的電子郵件。`);
+    }
+  }
+  
+  // 顯示報告詳細信息
+  function showReportInfo() {
+    const reportInfo = `
+報告詳細信息：
+────────────────
+• 報告名稱：忠茶客戶數據洞察報告
+• 生成時間：${new Date().toLocaleString('zh-TW')}
+• 檔案大小：1.2 MB
+• 頁數：12 頁
+• 數據範圍：2024年1月-12月
+• 包含內容：
+  - 客戶分群分析
+  - 消費行為洞察
+  - 營銷效果評估
+  - 行動建議方案
+• 機密等級：內部使用
+• 有效期限：30天
+────────────────
+點擊"下載 PDF 報告"按鈕獲取完整報告。`;
+
+    alert(reportInfo);
+  }
+  
+  // 顯示完整預覽
+  function showFullPreview() {
+    // 創建預覽模態框
+    const modal = document.createElement('div');
+    modal.id = 'fullPreviewModal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `;
+    
+    modal.innerHTML = `
+      <div style="background: white; border-radius: 16px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #e5e7eb;">
+          <h3 style="font-size: 18px; font-weight: bold; color: #1f2937;">完整報告預覽</h3>
+          <button id="closePreview" style="background: none; border: none; cursor: pointer; font-size: 24px; color: #6b7280;">×</button>
+        </div>
+        <div style="padding: 30px;">
+          <div style="background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 30px;">
+            <span class="material-symbols-outlined" style="font-size: 48px; color: #6b7280; margin-bottom: 16px;">description</span>
+            <h4 style="font-size: 20px; font-weight: bold; color: #1f2937; margin-bottom: 8px;">忠茶客戶數據洞察報告</h4>
+            <p style="color: #6b7280; margin-bottom: 20px;">完整報告預覽 - 此為模擬預覽界面</p>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+              <div style="text-align: center;">
+                <div style="font-size: 14px; color: #6b7280;">頁數</div>
+                <div style="font-size: 24px; font-weight: bold; color: #059669;">12</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-size: 14px; color: #6b7280;">檔案大小</div>
+                <div style="font-size: 24px; font-weight: bold; color: #059669;">1.2 MB</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-size: 14px; color: #6b7280;">數據範圍</div>
+                <div style="font-size: 24px; font-weight: bold; color: #059669;">12個月</div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+            <h5 style="font-size: 16px; font-weight: bold; color: #1f2937; margin-bottom: 16px;">報告內容摘要</h5>
+            <ul style="color: #4b5563; line-height: 1.6;">
+              <li>• 客戶分群：高價值客戶、潛力客戶、一般客戶、流失風險客戶</li>
+              <li>• 消費分析：平均客單價、購買頻率、產品偏好</li>
+              <li>• 趨勢洞察：季節性變化、新品接受度、促銷效果</li>
+              <li>• 營銷建議：個人化溝通、交叉銷售機會、留存策略</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center; margin-top: 30px;">
+            <button onclick="downloadPDFReport()" style="background: #059669; color: white; border: none; padding: 12px 32px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-right: 10px;">
+              <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">download</span>
+              下載完整報告
+            </button>
+            <button onclick="document.getElementById('fullPreviewModal').remove()" style="background: #6b7280; color: white; border: none; padding: 12px 32px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+              關閉預覽
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // 綁定關閉按鈕事件
+    modal.querySelector('#closePreview').addEventListener('click', function() {
+      modal.remove();
+    });
+    
+    // 點擊背景關閉
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  }
+  
+  // 頁面加載時綁定事件
+  document.addEventListener('DOMContentLoaded', function() {
+    // 綁定下載按鈕
+    const downloadBtn = document.querySelector('button:contains("下載 PDF 報告")');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', downloadPDFReport);
+    }
+    
+    // 綁定電子郵件按鈕
+    const emailBtn = document.querySelector('button:contains("發送到電子郵件")');
+    if (emailBtn) {
+      emailBtn.addEventListener('click', sendEmailReport);
+    }
+    
+  });
+</script>
 </body></html>

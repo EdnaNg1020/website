@@ -218,6 +218,29 @@
 </div>
 </div>
 </div>
+<!-- Export Report Section -->
+<div class="px-4 pt-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-primary text-xl font-bold tracking-tight">數據報告匯出</h2>
+<span class="text-xs font-medium text-primary/60 bg-primary/5 px-2 py-1 rounded-full uppercase tracking-wider">Export Report</span>
+</div>
+<div class="bg-gradient-to-r from-primary/5 to-tea-green/30 rounded-xl p-5 border border-primary/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="size-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-2xl">picture_as_pdf</span>
+</div>
+<div class="flex-1">
+<h3 class="text-primary font-bold text-lg">生成完整數據報告</h3>
+<p class="text-primary/60 text-sm">包含所有客戶洞察、分群分析與預測模型結果</p>
+</div>
+</div>
+<button onclick="exportDataReport()" class="w-full bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">download</span>
+<span>匯出PDF報告</span>
+</button>
+<p class="text-center text-[10px] text-primary/40 mt-3">報告將保存至系統並提供下載連結</p>
+</div>
+</div>
 <!-- Footer Data Info -->
 <div class="px-4 py-8 text-center">
 <p class="text-[10px] text-primary/40 leading-relaxed uppercase tracking-widest font-medium">
@@ -246,4 +269,27 @@
 </a>
 </div>
 </div>
+<script>
+  function exportDataReport() {
+    // 顯示匯出進度訊息
+    alert('正在生成PDF報告...\n\n報告將保存至系統並提供下載。');
+    
+    // 導航到數據報告頁面
+    window.location.href = '../_11/code.html';
+  }
+  
+  // 添加返回按鈕功能
+  document.addEventListener('DOMContentLoaded', function() {
+    const backButton = document.querySelector('.material-symbols-outlined');
+    if (backButton && backButton.textContent.includes('arrow_back')) {
+      backButton.closest('div').addEventListener('click', function() {
+        if (document.referrer && document.referrer.includes(window.location.hostname)) {
+          history.back();
+        } else {
+          window.location.href = '../_9/code.html';
+        }
+      });
+    }
+  });
+</script>
 </body></html>

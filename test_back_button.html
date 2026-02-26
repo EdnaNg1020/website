@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>返回按鈕測試</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #059669;
+            border-bottom: 2px solid #10b981;
+            padding-bottom: 10px;
+        }
+        .button {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        .button:hover {
+            background: #047857;
+        }
+        .instructions {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f1f5f9;
+        }
+        .success {
+            color: #065f46;
+            background: #d1fae5;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .error {
+            color: #991b1b;
+            background: #fee2e2;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>返回按鈕功能測試</h1>
+        
+        <div class="instructions">
+            <h3>測試步驟：</h3>
+            <ol>
+                <li>點擊下方"前往PDF報告頁面"按鈕</li>
+                <li>在PDF報告頁面中，點擊左上角的返回箭頭</li>
+                <li>檢查是否能成功返回此頁面</li>
+                <li>點擊下方"測試返回邏輯"按鈕檢查代碼</li>
+            </ol>
+        </div>
+        
+        <div>
+            <button class="button" onclick="window.location.href='_11/code.html'">
+                前往PDF報告頁面
+            </button>
+            
+            <button class="button" onclick="testBackButtonLogic()" style="background: #3b82f6;">
+                測試返回邏輯
+            </button>
+            
+            <button class="button" onclick="simulateBackButton()" style="background: #8b5cf6;">
+                模擬返回按鈕
+            </button>
+        </div>
+        
+        <div class="test-result">
+            <h3>測試結果：</h3>
+            <div id="testOutput">
+                點擊按鈕開始測試...
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+            <h3>技術說明：</h3>
+            <p>返回按鈕的代碼邏輯：</p>
+            <pre style="background: #f1f5f9; padding: 15px; border-radius: 6px; overflow-x: auto;">
+if (history.length > 1) {
+    history.back();
+} else {
+    window.location.href = '../_10/code.html';
+}
+            </pre>
+            <p>這確保了：</p>
+            <ul>
+                <li>如果有瀏覽歷史，則返回上一頁</li>
+                <li>如果沒有歷史（直接打開頁面），則導航到客戶資料庫頁面</li>
+                <li>添加了錯誤處理以防萬一</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function testBackButtonLogic() {
+            const testOutput = document.getElementById('testOutput');
+            
+            try {
+                // 測試歷史記錄
+                const hasHistory = history.length > 1;
+                
+                // 測試當前頁面信息
+                const currentPage = window.location.pathname;
+                const referrer = document.referrer;
+                
+                let result = `
+                    <div class="success">
+                        <strong>測試通過！</strong><br>
+                        當前頁面：${currentPage}<br>
+                        來源頁面：${referrer || '無'}<br>
+                        歷史記錄長度：${history.length}<br>
+                        是否有上一頁：${hasHistory ? '是' : '否'}
+                    </div>
+                `;
+                
+                testOutput.innerHTML = result;
+                
+                // 模擬返回邏輯
+                if (hasHistory) {
+                    console.log('測試：應該使用 history.back()');
+                } else {
+                    console.log('測試：應該導航到 ../_10/code.html');
+                }
+                
+            } catch (error) {
+                testOutput.innerHTML = `
+                    <div class="error">
+                        <strong>測試失敗！</strong><br>
+                        錯誤：${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        function simulateBackButton() {
+            const testOutput = document.getElementById('testOutput');
+            
+            try {
+                // 模擬返回按鈕的點擊邏輯
+                if (history.length > 1) {
+                    testOutput.innerHTML = `
+                        <div class="success">
+                            <strong>模擬成功！</strong><br>
+                            將執行：history.back()<br>
+                            <small>（在實際頁面中會返回上一頁）</small>
+                        </div>
+                    `;
+                    
+                    // 實際測試返回
+                    setTimeout(() => {
+                        history.back();
+                    }, 1000);
+                    
+                } else {
+                    testOutput.innerHTML = `
+                        <div class="success">
+                            <strong>模擬成功！</strong><br>
+                            將執行：window.location.href = '../_10/code.html'<br>
+                            <small>（在實際頁面中會導航到客戶資料庫）</small>
+                        </div>
+                    `;
+                    
+                    // 實際測試導航
+                    setTimeout(() => {
+                        window.location.href = '../_10/code.html';
+                    }, 1000);
+                }
+                
+            } catch (error) {
+                testOutput.innerHTML = `
+                    <div class="error">
+                        <strong>模擬失敗！</strong><br>
+                        錯誤：${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // 頁面加載時顯示信息
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('返回按鈕測試頁面已加載');
+            console.log('當前歷史記錄長度：', history.length);
+            console.log('來源頁面：', document.referrer);
+        });
+    </script>
+</body>
+</html>

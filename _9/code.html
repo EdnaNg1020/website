@@ -71,8 +71,13 @@
 <span class="material-symbols-outlined text-[14px] block">verified</span>
 </div>
 </div>
-<div class="flex flex-col">
+<div class="flex flex-col flex-1">
+<div class="flex items-center justify-between">
 <p class="text-tea-deep dark:text-dark-text text-xl font-bold leading-tight">王小明</p>
+<button class="size-8 rounded-full bg-tea-green/30 dark:bg-dark-border flex items-center justify-center hover:bg-tea-green/50 dark:hover:bg-dark-border/80 transition-colors" onclick="editProfile()" title="編輯個人資料">
+<span class="material-symbols-outlined text-tea-deep dark:text-dark-text text-sm">edit</span>
+</button>
+</div>
 <p class="text-tea-deep/60 dark:text-dark-muted text-sm font-medium mt-1">數據組主管</p>
 <div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-tea-green dark:bg-dark-border text-tea-deep dark:text-dark-text text-[10px] font-bold tracking-wider uppercase">
                         TC-8821
@@ -170,27 +175,33 @@
 
   // Function card actions
   function openCustomerDatabase() {
-    alert('開啟客戶資料庫功能');
-    // 實際應用中這裡會導航到客戶資料庫頁面
-    // window.location.href = 'customer_database.html';
+    // 導航到客戶資料庫頁面
+    window.location.href = '../_10/code.html';
   }
 
   function openSegmentManagement() {
-    alert('開啟分群管理功能');
-    // 實際應用中這裡會導航到分群管理頁面
-    // window.location.href = 'segment_management.html';
+    // 導航到分群管理頁面
+    window.location.href = '../_12/code.html';
   }
 
   function openMarketingPermissions() {
-    alert('開啟行銷權限功能');
-    // 實際應用中這裡會導航到行銷權限頁面
-    // window.location.href = 'marketing_permissions.html';
+    // 導航到行銷權限管理頁面
+    window.location.href = '../_13/code.html';
   }
 
   function openPersonalSettings() {
-    alert('開啟個人設定功能');
-    // 實際應用中這裡會導航到個人設定頁面
-    // window.location.href = 'personal_settings.html';
+    // 導航到個人設定頁面
+    window.location.href = '../_14/code.html';
+  }
+
+  function editProfile() {
+    // 編輯個人資料功能
+    const newName = prompt('請輸入新的姓名：', '王小明');
+    if (newName && newName.trim() !== '') {
+      alert(`個人資料已更新為：${newName}\n\n注意：此為演示功能，實際應用中會連接到後端API更新資料。`);
+      // 實際應用中這裡會更新頁面上的姓名並發送到後端
+      // document.querySelector('.profile-name').textContent = newName;
+    }
   }
 
   // Dark mode functions

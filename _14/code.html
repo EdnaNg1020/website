@@ -42,79 +42,79 @@
 <div class="relative mx-auto flex h-full min-h-screen max-w-md flex-col overflow-x-hidden shadow-2xl bg-background-light dark:bg-background-dark">
 <!-- Top Navigation Bar -->
 <div class="sticky top-0 z-10 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 px-4 py-4 backdrop-blur-md">
-<button class="flex size-10 items-center justify-center rounded-full bg-white/50 dark:bg-white/10 text-primary">
-<span class="material-symbols-outlined">arrow_back_ios_new</span>
-</button>
-<h1 class="text-lg font-bold tracking-tight">個人設定</h1>
-<div class="size-10"></div> <!-- Spacer for symmetry -->
+  <button id="backButton" class="flex size-10 items-center justify-center rounded-full bg-white/50 dark:bg-white/10 text-primary hover:bg-white/70 dark:hover:bg-white/20 transition-colors" onclick="goBack()">
+    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+  </button>
+  <h1 class="text-lg font-bold tracking-tight">個人設定</h1>
+  <div class="size-10"></div> <!-- Spacer for symmetry -->
 </div>
 <!-- Scrollable Content -->
 <div class="flex-1 overflow-y-auto px-6 pb-24">
 <!-- Profile Section -->
 <div class="flex flex-col items-center py-8">
-<div class="relative">
-<div class="size-32 overflow-hidden rounded-full border-4 border-white dark:border-primary/20 shadow-lg">
-<img alt="Profile Avatar" class="h-full w-full object-cover" data-alt="Close up portrait of a smiling male employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO-PALq-5g4p7niRh-nwqk7CKV80-qzIauU3YY8Wvc7T62vkrMUJUDO-CB7tqvgEsaeKRlc9A10lif9ZbNKEHr5VyCg9Aoz2vq9QaT9YYxweYlv5Sy1kRW_g2cot5u8kUgXU5m9MDKGJCHWi5cQOLUjVxKkFCUJECwA-dYD34XrP6i5dU3kyh3zKHZ4WlYFIiPZY7lv0i3imI5DQ9xPCwytHFu5wqMQYhBqO_Qyj4wSkb1k-21KcjfwmaESVMm7r52MeLTj9hEpJQ"/>
-</div>
-<button class="absolute bottom-1 right-1 flex size-9 items-center justify-center rounded-full bg-primary text-white shadow-md">
-<span class="material-symbols-outlined text-sm">photo_camera</span>
-</button>
-</div>
-<div class="mt-4 text-center">
-<h2 class="text-2xl font-bold">目前角色：店長</h2>
-<p class="text-primary/70 font-medium">忠茶 - 台北總店</p>
-</div>
+  <div class="relative">
+    <div class="size-32 overflow-hidden rounded-full border-4 border-white dark:border-primary/20 shadow-lg">
+      <img alt="Profile Avatar" class="h-full w-full object-cover" data-alt="Professional male portrait for manager profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6VzYKcjiW21rXIyJRgZM-3iouZzETzzOo6kE3z6259Ygf6cRxUnCcZzXmCQ4oXb1fc_xYXfbfsEI5a_0TSlt7Ap85Nlpy1ohFDlLipNe_AOFskJPTC6h4BlIKt7ARtQO6oGvZTN3f_5HL3jSJ7fr9-0SeE8Iu3cl3kxQuALP79HwBcw0CJNuJrGe2Eje3IpxsHRa8CSpu5DsOZl3nUMLjnYInqjAUhOTXXFDkpfaEn0ztJL3FbTpkhkNuUEHxgKp7NozjAjMOAhY"/>
+    </div>
+    <button class="absolute bottom-1 right-1 flex size-9 items-center justify-center rounded-full bg-primary text-white shadow-md" onclick="updateProfilePicture()">
+      <span class="material-symbols-outlined text-sm">photo_camera</span>
+    </button>
+  </div>
+  <div class="mt-4 text-center">
+    <h2 class="text-2xl font-bold">目前角色：數據組主管</h2>
+    <p class="text-primary/70 font-medium">忠茶 - 台北總店</p>
+  </div>
 </div>
 <!-- Form Card -->
 <div class="space-y-6 rounded-xl bg-white dark:bg-primary/5 p-6 shadow-sm border border-primary/5">
 <h3 class="text-sm font-bold uppercase tracking-wider text-primary/60">基本資訊</h3>
 <!-- Employee ID -->
 <div class="space-y-2">
-<label class="block text-sm font-semibold">員工編號</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">badge</span>
-<input class="w-full rounded-lg border-primary/10 bg-background-light px-11 py-3.5 focus:border-primary focus:ring-primary dark:bg-background-dark" placeholder="例如: TC-2024001" type="text" value="TC-2024001"/>
-</div>
+  <label class="block text-sm font-semibold">員工編號</label>
+  <div class="relative">
+    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">badge</span>
+    <input id="employeeId" class="w-full rounded-lg border-primary/10 bg-background-light px-11 py-3.5 focus:border-primary focus:ring-primary dark:bg-background-dark" placeholder="例如: TC-8821" type="text" value="TC-8821"/>
+  </div>
 </div>
 <!-- Gmail Account -->
 <div class="space-y-2">
-<label class="block text-sm font-semibold">Gmail 帳號</label>
-<div class="flex gap-2">
-<div class="relative flex-1">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">mail</span>
-<input class="w-full rounded-lg border-primary/10 bg-background-light px-11 py-3.5 text-primary/60 focus:border-primary focus:ring-primary dark:bg-background-dark" readonly="" type="email" value="alex.chen@gmail.com"/>
-</div>
-<button class="whitespace-nowrap rounded-lg bg-tea-green px-4 font-bold text-primary hover:bg-tea-green/80 transition-colors">
+  <label class="block text-sm font-semibold">Gmail 帳號</label>
+  <div class="flex gap-2">
+    <div class="relative flex-1">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">mail</span>
+      <input id="gmailAccount" class="w-full rounded-lg border-primary/10 bg-background-light px-11 py-3.5 focus:border-primary focus:ring-primary dark:bg-background-dark" type="email" value="alex.chen@gmail.com" placeholder="請輸入您的Gmail帳號"/>
+    </div>
+    <button id="verifyAccountBtn" class="whitespace-nowrap rounded-lg bg-tea-green px-4 font-bold text-primary hover:bg-tea-green/80 transition-colors" onclick="verifyGmailAccount()">
                             驗證帳號
                         </button>
-</div>
-<p class="text-xs text-primary/50 px-1">您的 Google 帳號已連結，用於兩步驟驗證。</p>
+  </div>
+  <p class="text-xs text-primary/50 px-1">輸入您的Gmail帳號並點擊驗證按鈕進行驗證。</p>
 </div>
 <hr class="border-primary/5"/>
 <!-- Action Links -->
 <div class="flex flex-col gap-4">
-<a class="flex items-center justify-between group" href="#">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary/60 group-hover:text-primary">lock_reset</span>
-<span class="font-medium">重設密碼 / 二階段驗證</span>
-</div>
-<span class="material-symbols-outlined text-primary/30">chevron_right</span>
-</a>
-<a class="flex items-center justify-between group" href="#">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary/60 group-hover:text-primary">verified_user</span>
-<span class="font-medium">隱私與安全設定</span>
-</div>
-<span class="material-symbols-outlined text-primary/30">chevron_right</span>
-</a>
+  <a id="resetPasswordLink" class="flex items-center justify-between group cursor-pointer" onclick="resetPassword()">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary/60 group-hover:text-primary">lock_reset</span>
+      <span class="font-medium">重設密碼 / 二階段驗證</span>
+    </div>
+    <span class="material-symbols-outlined text-primary/30">chevron_right</span>
+  </a>
+  <a id="privacySettingsLink" class="flex items-center justify-between group cursor-pointer" onclick="showPrivacySettings()">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary/60 group-hover:text-primary">verified_user</span>
+      <span class="font-medium">隱私與安全設定</span>
+    </div>
+    <span class="material-symbols-outlined text-primary/30">chevron_right</span>
+  </a>
 </div>
 </div>
 <!-- Save Button -->
 <div class="mt-8">
-<button class="w-full rounded-xl bg-primary py-4 text-lg font-bold text-white shadow-lg active:scale-95 transition-transform">
-                    儲存設定
-                </button>
-<p class="mt-4 text-center text-xs text-primary/40">上次更新：2024年5月20日 14:30</p>
+  <button id="saveSettingsBtn" class="w-full rounded-xl bg-primary py-4 text-lg font-bold text-white shadow-lg active:scale-95 transition-transform" onclick="saveSettings()">
+                      儲存設定
+                  </button>
+  <p id="lastUpdated" class="mt-4 text-center text-xs text-primary/40">上次更新：2024年5月20日 14:30</p>
 </div>
 </div>
 <!-- Bottom Navigation Bar (iOS Style) -->
@@ -139,8 +139,307 @@
 </div>
 <!-- Home Indicator -->
 <div class="mt-4 flex justify-center">
-<div class="h-1.5 w-32 rounded-full bg-primary/10"></div>
+  <div class="h-1.5 w-32 rounded-full bg-primary/10"></div>
 </div>
 </div>
 </div>
+
+<script>
+  // 返回按鈕功能
+  function goBack() {
+    try {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        window.location.href = '../_9/code.html';
+      }
+    } catch (error) {
+      window.location.href = '../_9/code.html';
+    }
+  }
+
+  // 隱私與安全設定功能
+  function showPrivacySettings() {
+    showNotification('隱私與安全設定功能正在開發中，即將推出！', 'info');
+    
+    // 模擬加載隱私設定頁面
+    setTimeout(() => {
+      const confirmLoad = confirm('隱私與安全設定頁面正在開發中。\n\n您希望：\n1. 查看隱私政策概要\n2. 設定資料存取權限\n3. 管理通知偏好\n\n點擊「確定」查看概要，或「取消」返回。');
+      
+      if (confirmLoad) {
+        showNotification('隱私政策概要：\n1. 我們僅收集必要資料\n2. 您的資料受到加密保護\n3. 您可以隨時管理權限', 'info');
+      }
+    }, 300);
+  }
+
+  // 表單驗證和儲存功能
+  function saveSettings() {
+    const employeeIdInput = document.getElementById('employeeId');
+    const gmailAccountInput = document.getElementById('gmailAccount');
+    const employeeId = employeeIdInput ? employeeIdInput.value.trim() : '';
+    const gmailAccount = gmailAccountInput ? gmailAccountInput.value.trim() : '';
+    
+    // 驗證員工編號
+    if (!employeeId) {
+      showNotification('請輸入員工編號', 'error');
+      if (employeeIdInput) employeeIdInput.focus();
+      return;
+    }
+    
+    // 驗證員工編號格式
+    if (!/^TC-\d{4,}$/.test(employeeId)) {
+      showNotification('員工編號格式不正確，應為 TC-數字 (例如: TC-8821)', 'error');
+      if (employeeIdInput) employeeIdInput.focus();
+      return;
+    }
+    
+    // 驗證Gmail帳號
+    if (!gmailAccount) {
+      showNotification('請輸入Gmail帳號', 'error');
+      if (gmailAccountInput) gmailAccountInput.focus();
+      return;
+    }
+    
+    // 驗證Gmail格式
+    if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(gmailAccount)) {
+      showNotification('請輸入有效的Gmail帳號 (必須是 @gmail.com 結尾)', 'error');
+      if (gmailAccountInput) gmailAccountInput.focus();
+      return;
+    }
+
+    // 模擬儲存到伺服器
+    showNotification('設定已成功儲存！', 'success');
+    
+    // 更新最後更新時間
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('zh-TW', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    const lastUpdatedElement = document.getElementById('lastUpdated');
+    if (lastUpdatedElement) {
+      lastUpdatedElement.textContent = `上次更新：${formattedDate}`;
+    }
+    
+    // 如果Gmail已驗證，顯示已驗證狀態
+    const verifyButton = document.getElementById('verifyAccountBtn');
+    if (verifyButton && verifyButton.textContent === '已驗證') {
+      showNotification('所有設定已儲存，Gmail帳號已驗證', 'success');
+    } else {
+      showNotification('設定已儲存，請記得驗證您的Gmail帳號', 'info');
+    }
+  }
+
+  // 顯示通知
+  function showNotification(message, type = 'info') {
+    // 移除現有的通知
+    const existingNotification = document.querySelector('.custom-notification');
+    if (existingNotification) {
+      existingNotification.remove();
+    }
+
+    // 創建通知元素
+    const notification = document.createElement('div');
+    notification.className = `custom-notification fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg transition-all duration-300 ${
+      type === 'success' ? 'bg-green-500 text-white' :
+      type === 'error' ? 'bg-red-500 text-white' :
+      'bg-blue-500 text-white'
+    }`;
+    notification.textContent = message;
+    
+    // 添加到頁面
+    document.body.appendChild(notification);
+    
+    // 3秒後自動移除
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      notification.style.transform = 'translate(-50%, -20px)';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  // 驗證Gmail帳號功能
+  function verifyGmailAccount() {
+    const gmailAccountInput = document.getElementById('gmailAccount');
+    const verifyButton = document.getElementById('verifyAccountBtn');
+    const gmailAccount = gmailAccountInput ? gmailAccountInput.value.trim() : '';
+    
+    // 檢查是否已輸入Gmail
+    if (!gmailAccount) {
+      showNotification('請先輸入Gmail帳號', 'error');
+      if (gmailAccountInput) gmailAccountInput.focus();
+      return;
+    }
+    
+    // 檢查Gmail格式
+    if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(gmailAccount)) {
+      showNotification('請輸入有效的Gmail帳號 (必須是 @gmail.com 結尾)', 'error');
+      if (gmailAccountInput) gmailAccountInput.focus();
+      return;
+    }
+    
+    if (verifyButton) {
+      // 如果已經驗證過，顯示訊息
+      if (verifyButton.textContent === '已驗證') {
+        showNotification('此Gmail帳號已經驗證過了', 'info');
+        return;
+      }
+      
+      // 開始驗證過程
+      verifyButton.disabled = true;
+      verifyButton.textContent = '驗證中...';
+      verifyButton.classList.add('opacity-70');
+      
+      // 模擬驗證過程（1.5秒）
+      setTimeout(() => {
+        showNotification('Gmail帳號驗證成功！驗證郵件已發送到您的信箱。', 'success');
+        verifyButton.textContent = '已驗證';
+        verifyButton.classList.remove('bg-tea-green');
+        verifyButton.classList.add('bg-green-500', 'text-white');
+        verifyButton.disabled = false; // 保持可點擊狀態，但顯示已驗證
+        
+        // 更新Gmail輸入框為唯讀
+        if (gmailAccountInput) {
+          gmailAccountInput.readOnly = true;
+          gmailAccountInput.classList.add('text-primary/60');
+        }
+      }, 1500);
+    }
+  }
+
+  // 重設密碼功能
+  function resetPassword() {
+    const newPassword = prompt('請輸入新密碼（至少8個字符，包含字母和數字）：');
+    
+    if (newPassword) {
+      if (newPassword.length < 8) {
+        showNotification('密碼長度至少需要8個字符', 'error');
+        return;
+      }
+      
+      if (!/[a-zA-Z]/.test(newPassword) || !/\d/.test(newPassword)) {
+        showNotification('密碼必須包含字母和數字', 'error');
+        return;
+      }
+      
+      // 模擬重設密碼
+      showNotification('密碼重設成功！請使用新密碼登入。', 'success');
+    }
+  }
+
+  // 更新個人頭像功能
+  function updateProfilePicture() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    
+    fileInput.onchange = function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+          showNotification('圖片大小不能超過5MB', 'error');
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const profileImage = document.querySelector('img[alt="Profile Avatar"]');
+          if (profileImage) {
+            profileImage.src = e.target.result;
+            showNotification('個人頭像已更新！', 'success');
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    
+    fileInput.click();
+  }
+
+  // 初始化事件監聽器
+  document.addEventListener('DOMContentLoaded', function() {
+    // 所有按鈕已經有onclick事件，這裡只需要初始化黑暗模式
+    
+    // 初始化黑暗模式
+    initializeDarkMode();
+    
+    // 顯示歡迎訊息
+    setTimeout(() => {
+      showNotification('個人設定頁面已載入完成，所有按鈕功能正常', 'info');
+    }, 500);
+    
+    // 為Gmail輸入框添加輸入事件，實時驗證格式
+    const gmailAccountInput = document.getElementById('gmailAccount');
+    if (gmailAccountInput) {
+      gmailAccountInput.addEventListener('input', function() {
+        const email = this.value.trim();
+        if (email && !/^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(email)) {
+          this.classList.add('border-red-300');
+        } else {
+          this.classList.remove('border-red-300');
+        }
+      });
+    }
+    
+    // 為員工編號輸入框添加輸入事件
+    const employeeIdInput = document.getElementById('employeeId');
+    if (employeeIdInput) {
+      employeeIdInput.addEventListener('input', function() {
+        const id = this.value.trim();
+        if (id && !/^TC-\d{4,}$/.test(id)) {
+          this.classList.add('border-red-300');
+        } else {
+          this.classList.remove('border-red-300');
+        }
+      });
+    }
+  });
+
+  // 黑暗模式功能
+  function initializeDarkMode() {
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const html = document.documentElement;
+    
+    if (savedMode === 'true' || (savedMode === null && prefersDark)) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+  }
+
+  // 添加一些CSS樣式用於通知
+  const style = document.createElement('style');
+  style.textContent = `
+    .custom-notification {
+      animation: slideDown 0.3s ease-out;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+    
+    button:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
+    }
+    
+    input:focus {
+      outline: none;
+      ring: 2px;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
 </body></html>

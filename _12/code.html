@@ -183,4 +183,108 @@
 </div>
 </div>
 
-```</body></html>
+<script>
+  // 分群管理頁面功能
+  document.addEventListener('DOMContentLoaded', function() {
+    // 返回按鈕功能
+    const backBtn = document.querySelector('.material-symbols-outlined');
+    if (backBtn && backBtn.textContent.includes('arrow_back_ios_new')) {
+      backBtn.closest('div').addEventListener('click', function() {
+        if (document.referrer && document.referrer.includes(window.location.hostname)) {
+          history.back();
+        } else {
+          window.location.href = '../_9/code.html';
+        }
+      });
+    }
+    
+    // 為"匯出名單"按鈕添加功能
+    const exportButtons = document.querySelectorAll('button');
+    exportButtons.forEach(button => {
+      if (button.textContent.includes('匯出名單')) {
+        button.addEventListener('click', function() {
+          const card = this.closest('.rounded-xl');
+          const segmentName = card.querySelector('h4') ? card.querySelector('h4').textContent : '該群組';
+          alert(`正在匯出 ${segmentName} 的名單...\n\n系統將生成CSV檔案供您下載。`);
+          
+          // 模擬匯出過程
+          setTimeout(() => {
+            alert(`${segmentName} 名單已成功匯出！\n\n檔案已保存至您的下載資料夾。`);
+          }, 1500);
+        });
+      }
+    });
+    
+    // 為"發送專屬禮"按鈕添加功能
+    const giftButtons = document.querySelectorAll('button');
+    giftButtons.forEach(button => {
+      if (button.textContent.includes('發送專屬禮')) {
+        button.addEventListener('click', function() {
+          const card = this.closest('.rounded-xl');
+          const segmentName = card.querySelector('h4') ? card.querySelector('h4').textContent : '該群組';
+          alert(`為 ${segmentName} 發送專屬禮物...\n\n系統將發送個人化優惠券給該群組成員。`);
+        });
+      }
+    });
+    
+    // 為"查看詳情"按鈕添加功能
+    const detailButtons = document.querySelectorAll('button');
+    detailButtons.forEach(button => {
+      if (button.textContent.includes('查看詳情')) {
+        button.addEventListener('click', function() {
+          const card = this.closest('.rounded-xl');
+          const segmentName = card.querySelector('h4') ? card.querySelector('h4').textContent : '該群組';
+          alert(`顯示 ${segmentName} 的詳細分析...\n\n將導航到該群組的詳細頁面。`);
+          // 實際應用中這裡會導航到詳細頁面
+          // window.location.href = 'segment_detail.html';
+        });
+      }
+    });
+    
+    // 為"啟動關懷任務"按鈕添加功能
+    const careButtons = document.querySelectorAll('button');
+    careButtons.forEach(button => {
+      if (button.textContent.includes('啟動關懷任務')) {
+        button.addEventListener('click', function() {
+          const card = this.closest('.rounded-xl');
+          const segmentName = card.querySelector('h4') ? card.querySelector('h4').textContent : '該群組';
+          alert(`為 ${segmentName} 啟動關懷任務...\n\n系統將自動發送關懷訊息並安排跟進。`);
+        });
+      }
+    });
+    
+    // 為"發送回店券"按鈕添加功能
+    const couponButtons = document.querySelectorAll('button');
+    couponButtons.forEach(button => {
+      if (button.textContent.includes('發送回店券')) {
+        button.addEventListener('click', function() {
+          const card = this.closest('.rounded-xl');
+          const segmentName = card.querySelector('h4') ? card.querySelector('h4').textContent : '該群組';
+          alert(`為 ${segmentName} 發送回店券...\n\n系統將發送專屬回店優惠券。`);
+        });
+      }
+    });
+    
+    // 底部導航連結
+    const navLinks = document.querySelectorAll('.fixed.bottom-0 a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const text = this.querySelector('p').textContent;
+        if (text === '首頁') {
+          e.preventDefault();
+          window.location.href = '../_8/code.html';
+        } else if (text === '分群') {
+          // 當前頁面，不做任何事
+          e.preventDefault();
+        } else if (text === '數據') {
+          e.preventDefault();
+          window.location.href = '../_10/code.html';
+        } else if (text === '設定') {
+          e.preventDefault();
+          window.location.href = '../_9/code.html#settings';
+        }
+      });
+    });
+  });
+</script>
+</body></html>
