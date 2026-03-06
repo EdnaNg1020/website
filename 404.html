@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>忠茶 · 數據分析中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #5D4037;
+        }
+        .loading {
+            margin: 30px 0;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #5D4037;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error {
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+    <script>
+        // GitHub Pages SPA 路由處理
+        (function() {
+            // 當前路徑
+            const path = window.location.pathname;
+            
+            // 如果路徑是根目錄或已知頁面，重定向到 index.html
+            if (path === '/' || path === '/index.html' || path === '/404.html') {
+                // 這是正常訪問，不需要處理
+                return;
+            }
+            
+            // 否則，這是一個 404 錯誤，我們將其重定向到 SPA
+            console.log('GitHub Pages SPA 路由: 捕獲路徑', path);
+            
+            // 提取頁面名稱
+            let page = 'dashboard';
+            if (path.includes('_8/code.html') || path.includes('dashboard')) {
+                page = 'dashboard';
+            } else if (path.includes('_2/code.html') || path.includes('trends')) {
+                page = 'trends';
+            } else if (path.includes('_1/code.html') || path.includes('marketing')) {
+                page = 'marketing';
+            } else if (path.includes('_3/code.html') || path.includes('batch')) {
+                page = 'batch';
+            }
+            
+            // 重定向到主頁面並設置 hash
+            const redirectUrl = window.location.origin + '/website/#' + page;
+            console.log('重定向到:', redirectUrl);
+            window.location.replace(redirectUrl);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>忠茶 · 數據分析中心</h1>
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>正在載入應用程式...</p>
+        </div>
+        <p>如果沒有自動重定向，請 <a href="/website/">點擊這裡返回首頁</a>。</p>
+        
+        <div class="error" id="error-message" style="display: none;">
+            <h3>載入錯誤</h3>
+            <p id="error-detail"></p>
+            <button onclick="window.location.href='/website/'">返回首頁</button>
+        </div>
+    </div>
+    
+    <script>
+        // 備用重定向方案
+        setTimeout(function() {
+            if (window.location.pathname !== '/website/' && !window.location.hash) {
+                window.location.href = '/website/';
+            }
+        }, 2000);
+        
+        // 顯示錯誤（如果有）
+        if (window.location.search.includes('error=')) {
+            const errorMsg = new URLSearchParams(window.location.search).get('error');
+            document.getElementById('error-detail').textContent = decodeURIComponent(errorMsg);
+            document.getElementById('error-message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

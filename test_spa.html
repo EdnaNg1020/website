@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SPA 路由測試</title>
+    <style>
+        .page { display: none; padding: 20px; }
+        .active { display: block; }
+        nav { background: #f0f0f0; padding: 10px; }
+        button { margin: 0 5px; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h1>SPA 路由測試</h1>
+    
+    <nav>
+        <button onclick="showPage('home')">首頁</button>
+        <button onclick="showPage('dashboard')">儀表板</button>
+        <button onclick="showPage('trends')">趨勢</button>
+    </nav>
+    
+    <div id="home" class="page active">
+        <h2>首頁</h2>
+        <p>這是首頁內容。</p>
+    </div>
+    
+    <div id="dashboard" class="page">
+        <h2>儀表板</h2>
+        <p>載入儀表板內容...</p>
+        <div id="dashboard-content"></div>
+    </div>
+    
+    <div id="trends" class="page">
+        <h2>趨勢報告</h2>
+        <p>載入趨勢內容...</p>
+        <div id="trends-content"></div>
+    </div>
+    
+    <script>
+        // 簡單的 SPA 路由
+        function showPage(pageId) {
+            // 隱藏所有頁面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 顯示目標頁面
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // 更新 URL hash
+            window.location.hash = pageId;
+            
+            // 如果需要，載入動態內容
+            if (pageId === 'dashboard') {
+                loadDashboard();
+            } else if (pageId === 'trends') {
+                loadTrends();
+            }
+        }
+        
+        async function loadDashboard() {
+            try {
+                const response = await fetch('_8/code.html');
+                const html = await response.text();
+                
+                // 簡單提取內容（這只是測試）
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                
+                // 獲取 body 內容
+                const bodyContent = tempDiv.querySelector('body');
+                if (bodyContent) {
+                    // 簡單顯示部分內容
+                    document.getElementById('dashboard-content').innerHTML = 
+                        '<h3>儀表板預覽</h3><p>成功載入儀表板 HTML</p>';
+                }
+            } catch (error) {
+                document.getElementById('dashboard-content').innerHTML = 
+                    '<p style="color:red">載入失敗: ' + error.message + '</p>';
+            }
+        }
+        
+        async function loadTrends() {
+            try {
+                const response = await fetch('_2/code.html');
+                const html = await response.text();
+                document.getElementById('trends-content').innerHTML = 
+                    '<h3>趨勢報告預覽</h3><p>成功載入趨勢報告 HTML</p>';
+            } catch (error) {
+                document.getElementById('trends-content').innerHTML = 
+                    '<p style="color:red">載入失敗: ' + error.message + '</p>';
+            }
+        }
+        
+        // 初始化：檢查 hash
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                const pageId = window.location.hash.substring(1);
+                showPage(pageId);
+            }
+        });
+        
+        // 監聽 hash 變化
+        window.addEventListener('hashchange', () => {
+            if (window.location.hash) {
+                const pageId = window.location.hash.substring(1);
+                showPage(pageId);
+            }
+        });
+    </script>
+</body>
+</html>

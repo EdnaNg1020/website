@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>路徑測試</title>
+</head>
+<body>
+    <h1>路徑測試</h1>
+    <p>測試從 index.html 到 _8/code.html 的路徑：</p>
+    
+    <div>
+        <h2>測試連結：</h2>
+        <ul>
+            <li><a href="_8/code.html">_8/code.html</a></li>
+            <li><a href="./_8/code.html">./_8/code.html</a></li>
+            <li><a href="/_8/code.html">/_8/code.html</a></li>
+        </ul>
+    </div>
+    
+    <div>
+        <h2>JavaScript 測試：</h2>
+        <button onclick="testRedirect()">測試跳轉</button>
+    </div>
+    
+    <script>
+        function testRedirect() {
+            console.log('測試跳轉...');
+            const paths = [
+                '_8/code.html',
+                './_8/code.html', 
+                '/_8/code.html'
+            ];
+            
+            for (let path of paths) {
+                console.log('嘗試路徑:', path);
+                try {
+                    // 測試路徑是否存在
+                    const link = document.createElement('a');
+                    link.href = path;
+                    console.log('完整路徑:', link.href);
+                } catch (e) {
+                    console.error('錯誤:', e);
+                }
+            }
+            
+            // 實際跳轉到第一個路徑
+            window.location.href = './_8/code.html';
+        }
+    </script>
+</body>
+</html>
