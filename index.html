@@ -389,8 +389,16 @@ async function loadPage(page) {
                 if (url.startsWith('http') || url.startsWith('//') || url.startsWith('#') || url.startsWith('data:')) {
                     return match;
                 }
+                // 處理 ../ 路徑
+                let normalizedUrl = url;
+                while (normalizedUrl.startsWith('../')) {
+                    normalizedUrl = normalizedUrl.substring(3);
+                }
                 if (url.startsWith('./')) {
-                    return `${attr}="${basePath}${url.substring(2)}"`;
+                    normalizedUrl = normalizedUrl.substring(1);
+                }
+                if (url.startsWith('./') || url.startsWith('../')) {
+                    return `${attr}="${basePath}${normalizedUrl}"`;
                 }
                 if (!url.startsWith('/')) {
                     return `${attr}="${basePath}${url}"`;
