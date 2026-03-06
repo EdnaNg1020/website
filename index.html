@@ -187,12 +187,33 @@ const pageRoutes = {
 
 // GitHub Pages 基礎路徑檢測
 function getBasePath() {
-    // 如果是在 GitHub Pages 上，路徑可能包含 repository 名稱
     const path = window.location.pathname;
+    // 移除結尾的斜杠，找到最後一個路徑段
+    const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
+    const lastSegment = cleanPath.split('/').pop();
+    
+    // 如果不是 index.html，則的最後一段作為基礎路徑
+    if (lastSegment && lastSegment !== 'index.html' && !lastSegment.endsWith('.html')) {
+        return `/${lastSegment}/`;
+    }
+    // 如果路徑包含特定的子目錄
     if (path.includes('/website/')) {
         return '/website/';
     }
     return './';
+}
+
+// 獲取完整的頁面路由
+function getPageRoute(page) {
+    const basePath = getBasePath();
+    const relativePath = pageRoutes[page];
+    if (!relativePath) return null;
+    
+    // 如果是相對路徑，轉換為基於 basePath 的路徑
+    if (relativePath.startsWith('./')) {
+        return basePath + relativePath.substring(2);
+    }
+    return relativePath;
 }
 
 // 當前狀態
@@ -343,7 +364,7 @@ function navigateTo(page) {
 // 載入頁面
 async function loadPage(page) {
     const container = document.getElementById('dashboard-container');
-    const route = pageRoutes[page];
+    const route = getPageRoute(page);
     
     if (!route) {
         console.error('未知頁面:', page);
@@ -389,19 +410,22 @@ async function loadPage(page) {
                 if (url.startsWith('http') || url.startsWith('//') || url.startsWith('#') || url.startsWith('data:')) {
                     return match;
                 }
-                // 處理 ../ 路徑
+                // 處理相對路徑
                 let normalizedUrl = url;
+                // 移除 ../ 
                 while (normalizedUrl.startsWith('../')) {
                     normalizedUrl = normalizedUrl.substring(3);
                 }
-                if (url.startsWith('./')) {
-                    normalizedUrl = normalizedUrl.substring(1);
+                // 移除 ./
+                if (normalizedUrl.startsWith('./')) {
+                    normalizedUrl = normalizedUrl.substring(2);
                 }
+                // 組合新路徑
                 if (url.startsWith('./') || url.startsWith('../')) {
                     return `${attr}="${basePath}${normalizedUrl}"`;
                 }
                 if (!url.startsWith('/')) {
-                    return `${attr}="${basePath}${url}"`;
+                    return `${attr}="${basePath}${normalizedUrl}"`;
                 }
                 return match;
             });
