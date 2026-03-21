@@ -187,19 +187,25 @@ const pageRoutes = {
 
 // GitHub Pages 基礎路徑檢測
 function getBasePath() {
-    const path = window.location.pathname;
-    // 移除結尾的斜杠，找到最後一個路徑段
-    const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
-    const lastSegment = cleanPath.split('/').pop();
+    // 如果是本地 file:// 協議或 localhost，直接返回相對路徑
+    if (window.location.protocol === 'file:' || 
+        window.location.hostname === 'localhost' || 
+        window.location.hostname === '127.0.0.1') {
+        return './';
+    }
     
-    // 如果不是 index.html，則的最後一段作為基礎路徑
-    if (lastSegment && lastSegment !== 'index.html' && !lastSegment.endsWith('.html')) {
-        return `/${lastSegment}/`;
+    const hostname = window.location.hostname;
+    const path = window.location.pathname;
+    
+    // 如果是 GitHub Pages (hostname 包含 github.io)
+    if (hostname.includes('github.io')) {
+        // 從路徑中提取第一個段作為倉庫名稱
+        const segments = path.split('/').filter(s => s && !s.endsWith('.html') && s !== 'index.html');
+        if (segments.length > 0) {
+            return `/${segments[0]}/`;
+        }
     }
-    // 如果路徑包含特定的子目錄
-    if (path.includes('/website/')) {
-        return '/website/';
-    }
+    
     return './';
 }
 
@@ -288,23 +294,7 @@ function togglePasswordVisibility() {
 
 // 登入處理
 function handleLogin() {
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
     const loginBtn = document.getElementById('login-btn');
-    
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
-    
-    // 簡單驗證
-    if (!email || !password) {
-        showNotification('請輸入帳號和密碼', 'error');
-        return;
-    }
-    
-    if (password.length < 3) {
-        showNotification('密碼長度至少需要3個字符', 'error');
-        return;
-    }
     
     // 模擬登入處理
     loginBtn.innerHTML = `
@@ -317,13 +307,11 @@ function handleLogin() {
     setTimeout(() => {
         // 設置登入狀態
         sessionStorage.setItem('忠茶_loggedIn', 'true');
-        sessionStorage.setItem('忠茶_userEmail', email);
+        sessionStorage.setItem('忠茶_userEmail', 'guest@demo.com');
         
-        isLoggedIn = true;
-        showApp();
-        navigateTo('dashboard');
-        
-        showNotification('登入成功！', 'success');
+        // 直接跳轉到儀表板頁面
+        const basePath = getBasePath();
+        window.location.href = basePath + '_8/code.html';
     }, 800);
 }
 
